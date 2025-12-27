@@ -12,10 +12,10 @@ const routes = [
         component: () => import("../components/Home.vue"),
       },
       {
-        path: "company-setup",
+        path: "/company-setup",
         name: "CompanySetup",
-        // component: () => import("@/views/CompanySetup.vue"),
-        children: [
+        component: () => import("../views/setup/CompanySetup.vue"),
+        children: [ 
           {
             path: "branch",
             name: "Branch",
