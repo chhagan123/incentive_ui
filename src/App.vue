@@ -1,9 +1,9 @@
 <script setup lang="ts">
-
+import Navbar from './components/UI/Navbar.vue';
 </script>
 
 <template>
-<h1 class="underlie font-bold">hellow world</h1>
+<Navbar/>
 </template>
 
 <style scoped>
