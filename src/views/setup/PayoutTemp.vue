@@ -16,28 +16,18 @@
         <div class="text-xl font-bold text-[#000000BF]">Actions</div>
       </div>
       <div
-        class="flex justify-between h-[166px] items-center gap-6 border-2 rounded-2xl border-black/5 p-8"
+        class="flex justify-between h-[140px] w-1/3 items-center gap-6 border-2 rounded-2xl border-black/5 p-8"
       >
        
-        <div class="flex gap-6 w-3/5">
-          <FormInput
-            label="Branch Code"
-            placeholder="Enter a Branch Code"
-            required
-          />
-  
-          <FormInput
-            label="Job Titles"
-            placeholder="Select one or more Job Titles"
-            type="select"
-            required
-          />
+        <div class="flex flex-col gap-2 w-3/5">
+         <div class="text-xl font-bold text-black/75 text-nowrap">Add New Payout Template</div>
+         <div class="text-nowrap text-gray-700">Click the '+' button to get started</div>  
         </div>
   
         <div
-          class="bg-[#CF6768] w-40 h-10 rounded-sm flex items-center justify-center text-white text-md mt-3"
+          class="bg-[#CF6768] w-10 h-10 rounded-xl flex items-center justify-center text-white text-md mt-3"
         >
-          <Actionwithicon :icon="Plus" text="Create Branch" />
+          <plus/>
         </div>
       </div>
       <div class="gap-2 flex items-center">
