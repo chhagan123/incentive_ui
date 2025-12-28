@@ -18,7 +18,7 @@
               v-if="!link.children"
               :to="link.to"
               class="px-2 py-2 rounded hover:bg-white hover:text-black"
-              active-class="font-semibold"
+              active-class="font-semibold bg-white text-black"
             >
               {{ link.name }}
             </RouterLink>
@@ -28,6 +28,7 @@
               v-if="link.children"
               @click="toggleDropdown(link.name)"
               class="flex items-center gap-1 px-2 py-2 rounded hover:bg-white hover:text-black cursor-pointer"
+              active-class="bg-white"
             >
               {{ link.name }}
               <span>▾</span>
@@ -142,7 +143,7 @@ const links = [
     children: [
       { name: "Branch", to: "/company-setup/branch" },
       { name: "Position", to: "/company-setup/position" },
-      { name: "Postion layout", to: "/company-setup/postion-layout" },
+      { name: "Postion layout", to: "/company-setup/payout-template" },
     ],
   },
   {
