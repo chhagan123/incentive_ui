@@ -25,12 +25,12 @@ const routes = [
     },
     {
       path: "position",
-      component: import("../views/setup/CompanySetup.vue"),
+      component: import("../views/setup/Positions.vue"),
       meta: { breadcrumb: "Position" },
     },
     {
       path: "payout-template",
-      component: import("../views/setup/CompanySetup.vue"),
+      component: import("../views/setup/PayoutTemp.vue"),
       meta: { breadcrumb: "payout-template" },
     },
   ],
