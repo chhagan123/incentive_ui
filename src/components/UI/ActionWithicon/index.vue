@@ -4,7 +4,7 @@
       <component :is="icon" class="w-6 h-6 text-gray-400 mr-2" />
   
      
-      <button @click="handleClick" class="font-medium">
+      <button @click="handleClick" class="font-medium text-nowrap ">
         {{ text }}
       </button>
     </div>
