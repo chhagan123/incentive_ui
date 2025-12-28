@@ -1,7 +1,6 @@
 <template>
 
-    <div class="flex flex-col gap-2 p-6">
-        <BreadCrumb :items="breadcrumbItems" />
+    <div class="flex flex-col gap-6 p-4">
         <div>
             <h1 class="text-4xl text-black/75 text-opacity-75 font-medium">Company setup</h1>
         </div>
@@ -9,7 +8,9 @@
         <div class="mt-4 bg-black/5 p-4 rounded-md w-70 items-center flex  justify-center">
             <ActionWithicon :icon="downloadIcon" text="Download company setup" />
         </div>
-        
+          <div class="mt-4">
+            <Tab :tabs="companySetupTabs"/>
+          </div>       
     </div>
 
 </template>
@@ -17,10 +18,10 @@
     import BreadCrumb from '@/components/UI/BreadCrumb/index.vue';
     import downloadIcon from '../../assets/icons/download/downloadIcon.vue';
     import ActionWithicon from '@/components/UI/ActionWithicon/index.vue';
-
-    const breadcrumbItems = [
-  { label: "company setup", to: "/" },
-  { label: "branch", to: "/company-setup" },
+    import Tab from '../../components/UI/Tabs/tab.vue';
+    const companySetupTabs = [
+  { label: "Branches", to: "/company-setup/branch" },
+  { label: "Positions", to: "/company-setup/position" },
+  { label: "Payout Templates", to: "/company-setup/payout-template" },
 ];
-
 </script>

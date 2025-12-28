@@ -10,24 +10,32 @@ const routes = [
         path: "overview",
         name: "Overview",
         component: () => import("../components/Home.vue"),
+        meta: { breadcrumb: "overview" },
       },
-      {
-        path: "/company-setup",
-        name: "CompanySetup",
-        component: () => import("../views/setup/CompanySetup.vue"),
-        children: [ 
-          {
-            path: "branch",
-            name: "Branch",
-            // component: () => import("@/views/Branch.vue"),
-          },
-          {
-            path: "position",
-            name: "Position",
-            // component: () => import("@/views/Position.vue"),
-          },
-        ],
-      },
+    // router/index.js
+  {
+  path: "/company-setup",
+  component: import("../views/setup/CompanySetup.vue"),
+  meta: { breadcrumb: "Company Setup" },
+  children: [
+    {
+      path: "branch",
+      component: import("../views/setup/CompanySetup.vue"),
+      meta: { breadcrumb: "Branch" },
+    },
+    {
+      path: "position",
+      component: import("../views/setup/CompanySetup.vue"),
+      meta: { breadcrumb: "Position" },
+    },
+    {
+      path: "payout-template",
+      component: import("../views/setup/CompanySetup.vue"),
+      meta: { breadcrumb: "payout-template" },
+    },
+  ],
+}
+
     ],
   },
 ];
