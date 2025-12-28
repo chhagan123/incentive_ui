@@ -23,15 +23,16 @@
           </span>
   
           <!-- Separator -->
-          <span v-if="index !== items.length - 1" class="mx-2">
-            >
-          </span>
+          <div v-if="index !== items.length - 1" class="mx-2">
+            <RightIcon class="h-3 w-3" />
+          </div>
         </li>
       </ol>
     </nav>
   </template>
   
   <script setup>
+    import RightIcon from '../../../assets/icons/Chevron/RightIcon.vue';
   defineProps({
     items: {
       type: Array,
