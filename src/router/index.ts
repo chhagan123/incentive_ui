@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from "vue-router";
+import Branches from "../views/setup/Branches.vue";
 
 const routes = [
   {
@@ -20,7 +21,7 @@ const routes = [
   children: [
     {
       path: "branch",
-      component: import("../views/setup/CompanySetup.vue"),
+      component: import("../views/setup/Branches.vue"),
       meta: { breadcrumb: "Branch" },
     },
     {
