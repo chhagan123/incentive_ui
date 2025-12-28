@@ -1,5 +1,4 @@
 import { createRouter, createWebHistory } from "vue-router";
-import Branches from "../views/setup/Branches.vue";
 
 const routes = [
   {
