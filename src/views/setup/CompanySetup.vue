@@ -7,10 +7,10 @@
         <p class="text-base text-gray-400">To start using Incentive Engine, first set up your company. Add a branch, add positions, and create a payout template</p>
         <div class="mt-4 bg-black/5 p-4 rounded-md w-70 items-center flex  justify-center">
             <ActionWithicon :icon="downloadIcon" text="Download company setup" />
-        </div>
-          <div class="mt-4">
-            <Tab :tabs="companySetupTabs"/>
-          </div>       
+        </div> 
+        <div>
+            <Tab :tabs="tabs" />
+        </div>   
     </div>
 
 </template>
@@ -18,8 +18,9 @@
     import BreadCrumb from '@/components/UI/BreadCrumb/index.vue';
     import downloadIcon from '../../assets/icons/download/downloadIcon.vue';
     import ActionWithicon from '@/components/UI/ActionWithicon/index.vue';
-    import Tab from '../../components/UI/Tabs/tab.vue';
-    const companySetupTabs = [
+    import Tab from '@/components/UI/CompanySetupTabs/tab.vue';
+
+    const tabs = [
   { label: "Branches", to: "/company-setup/branch" },
   { label: "Positions", to: "/company-setup/position" },
   { label: "Payout Templates", to: "/company-setup/payout-template" },
