@@ -83,8 +83,8 @@ const rowData = ref<any[]>([
 
 const columnDefs = [
 { label: 'Name', field: 'position', headerIcon: { component: IconJob } },
-{ label: 'branches', field: 'code', headerIcon: { component: IconCode } },
-{ label: 'created at', field: 'created_at', headerIcon: { component: IconClock } },
+{ label: 'Branches', field: 'code', headerIcon: { component: IconCode } },
+{ label: 'Breated at', field: 'created_at', headerIcon: { component: IconClock } },
 {
     label: 'Delete',
     field: 'delete',

@@ -90,18 +90,16 @@ const jobTitle = ref('')
 
 
 const rowData = ref<any[]>([
-  { code: 'Test', position: 'exec', created_at: 'November 24, 2025' },
+  { code: 'test', position: 'exec', created_at: 'November 24, 2025' },
   { code: 'team', position: 'exec', created_at: 'November 24, 2025' }
 ])
 
 
 const columnDefs = [
-{ label: 'code', field: 'code', headerIcon: { component: IconCode } },
-{ label: 'postion', field: 'position', headerIcon: { component: IconJob } },
-{ label: 'created at', field: 'created_at', headerIcon: { component: IconClock } },
-{
-    label: 'Delete',
-    field: 'delete',
+{ label: 'Code', field: 'code', headerIcon: { component: IconCode } },
+{ label: 'Postion', field: 'position', headerIcon: { component: IconJob } },
+{ label: 'Created at', field: 'created_at', headerIcon: { component: IconClock } },
+{label: 'Delete',field: 'delete',
     headerIcon: { component: IconDelete },
     cellIcon: { component: IconDelete }
   },
