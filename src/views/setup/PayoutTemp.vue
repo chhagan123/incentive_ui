@@ -51,7 +51,9 @@
           <Actionwithicon :icon="SearchIcon" text="Search" />
         </div>
       </div>
-      
+      <div class="border-3 border-black/10 h-70  rounded-xl">
+      <Table :rowData="rowData" :columnDefs="columnDefs" />
+    </div> 
     </div>
   </template>
   
@@ -61,5 +63,33 @@
   import Actionwithicon from "@/components/UI/ActionWithicon/index.vue";
   import Plus from "../../assets/icons/Plus/Plus.vue";
   import SearchIcon from "../../assets/icons/Search/SearchIcon.vue";
+  import Table from "../../components/UI/Tables/Table.vue";
+  import IconCode from "../../assets/icons/IconCode.vue";
+  import IconDelete from "../../assets/icons/IconDelete.vue";
+  import IconJob from "../../assets/icons/IconJob.vue";
+  import IconClock from "../../assets/icons/Black.vue";
+  import IconEye from  "../../assets/icons/IconEye/Black.vue";
+  import {ref} from 'vue' 
+
+  const rowData = ref<any[]>([
+   { code: 'Test', position: 'exec', created_at: 'November 24, 2025' },
+   { code: 'team', position: 'exec', created_at: 'November 24, 2025' }
+  ])
+
+
+ const columnDefs = [
+  { label: 'Name', field: 'position', headerIcon: { component: IconJob } },
+  { label: 'Branches', field: 'code', headerIcon: { component: IconCode } },
+  { label: 'Created at', field: 'created_at', headerIcon: { component: IconClock } },
+  {label: 'Delete',field: 'delete',
+    headerIcon: { component: IconDelete },
+    cellIcon: { component: IconDelete }
+  },
+  {label: 'View',field: 'view',
+    headerIcon: { component: IconEye },
+    cellIcon: { component: IconEye }
+  },
+ ]
+
   </script>
   
