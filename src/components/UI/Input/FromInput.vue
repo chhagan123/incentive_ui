@@ -55,10 +55,9 @@ const props = defineProps({
   required: Boolean
 })
 
-/* ================= EMITS ================= */
+
 const emit = defineEmits(['update:modelValue'])
 
-/* ================= METHODS ================= */
 const updateValue = (value: string) => {
   emit('update:modelValue', value)
 }
