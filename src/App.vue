@@ -1,12 +1,10 @@
 <script setup lang="ts">
+ import { RouterView } from 'vue-router';
 
 </script>
 
 <template>
-  <div class="w-full h-screen flex justify-center items-center">
-    <h1 class="text-2xl underline hover:bg-amber-600">hellow world</h1>
-  </div>
-
+  <RouterView/>   
 </template>
 
 <style scoped>
