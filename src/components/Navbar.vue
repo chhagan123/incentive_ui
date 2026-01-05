@@ -134,7 +134,7 @@
   const links = [
     {
       name: "Overview",
-      to: "/",
+      to: "/overview",
     },
     {
       name: "CompanySetup",
