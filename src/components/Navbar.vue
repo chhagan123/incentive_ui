@@ -140,9 +140,9 @@
       name: "CompanySetup",
       to: "/company-setup",
       children: [
-        { name: "Branch", to: "/company-setup/branch" },
-        { name: "Position", to: "/company-setup/position" },
-        { name: "Postion layout", to: "/company-setup/postion-layout" },
+        { name: "Branch", to: "/company-setup/branches" },
+        { name: "Position", to: "/company-setup/positions" },
+        { name: "Postion layout", to: "/company-setup/payout-templates" },
       ],
     },
     {
