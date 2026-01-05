@@ -19,6 +19,7 @@
                 :to="link.to"
                 class="px-2 py-2 rounded hover:bg-white hover:text-black"
                 active-class="font-semibold bg-white text-black"
+                @click="isactive = false"
               >
                 {{ link.name }}
               </RouterLink>
@@ -28,6 +29,7 @@
                 v-if="link.children"
                 @click="toggleDropdown(link.name)"
                 class="flex items-center gap-1 px-2 py-2 rounded hover:bg-white hover:text-black cursor-pointer"
+                :class="isactive ? 'bg-white text-black':''"
               >
                 {{ link.name }}
                 <span>▾</span>
@@ -43,6 +45,7 @@
                   :to="child.to"
                   class="block px-4 py-2 text-white hover:bg-white/10"
                   active-class="font-semibold"
+                  @click="isactive = true"
                 >
                   {{ child.name }}
                 </RouterLink>
@@ -130,6 +133,7 @@
   const mobileMenu = ref(false);
   const accountTab = ref(false);
   const activeDropdown = ref(null);
+  const isactive = ref(false)
   
   const links = [
     {
