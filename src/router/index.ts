@@ -10,7 +10,7 @@ const routes = [
       children: [
         {
           path: "overview",
-          name: "Overview",
+          name: "overview",
           component: Home,
           meta: { breadcrumb: "Overview" },
         },
@@ -27,6 +27,32 @@ const routes = [
             meta: { breadcrumb: "Calculator" },
           }
       ]
+    },
+    {
+        path: "/company-setup",
+        component: Home,
+        meta: { breadcrumb: "company setup" },
+        children: [
+            {
+              path: "branches",
+              name: "branch",
+              component: Home,
+              meta: { breadcrumb: "branches" },
+            },
+            {
+             path: "positions",
+             name: "positions",
+             component: Home,
+             meta: { breadcrumb: "positions" },
+            },
+            {
+             path: "payout-templates",
+             name: "payout-templates",
+             component: Home,
+             meta: { breadcrumb: "pauout-templates" },
+              },
+            
+        ]  
     }
   ]
 
