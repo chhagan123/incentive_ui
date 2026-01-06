@@ -32,7 +32,7 @@
                 :class="isactive ? 'bg-white text-black':''"
               >
                 {{ link.name }}
-                <span>▾</span>
+                <Down class="w-7 h-7"/>
               </button>
               <div
                 v-if="activeDropdown === link.name"
@@ -129,6 +129,7 @@
   
   <script setup lang="ts">
   import { ref } from "vue";
+  import Down from "../assets/icons/Chevron/Down.vue";
   
   const mobileMenu = ref(false);
   const accountTab = ref(false);
