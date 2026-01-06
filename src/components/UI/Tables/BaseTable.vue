@@ -1,5 +1,6 @@
 <template>
-    <table class="min-w-full border border-white rounded-2xl">
+   <div class="overflow-x-auto overflow-y-auto max-h-65">
+        <table class="min-w-full border border-white rounded-2xl">
    <!--Header-->
       <thead>
         <tr class="bg-gray-100">
@@ -57,6 +58,7 @@
         </tr>
       </tbody>
     </table>
+    </div>
   </template>
   
   <script setup lang="ts">
@@ -82,7 +84,6 @@
     columnDefs: ColumnDef[]
   }>()
   
-  /*  HELPERS */
   
   // Always return array for row icons
   const normalizeIcons = (icon: IconConfig | IconConfig[]) => {
