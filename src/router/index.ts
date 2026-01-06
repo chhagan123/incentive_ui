@@ -1,6 +1,7 @@
 import { createRouter,createWebHistory } from "vue-router";
 
 import Home from '../views/Home.vue'
+import CompnaySetup from "../views/CompanySetup/CompanySetup.vue";
 
 const routes = [
     {
@@ -30,7 +31,7 @@ const routes = [
     },
     {
         path: "/company-setup",
-        component: Home,
+        component: CompnaySetup,
         meta: { breadcrumb: "company setup" },
         children: [
             {
