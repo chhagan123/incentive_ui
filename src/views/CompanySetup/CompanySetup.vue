@@ -1,6 +1,7 @@
 <template>
   <div class="flex flex-col gap-6 ">
-    <div>
+    <div class="flex flex-col gap-2">
+      <div>
       <h1 class="text-4xl text-black/75 text-opacity-75 font-medium">
         Company setup
       </h1>
@@ -9,8 +10,10 @@
       To start using Incentive Engine, first set up your company. Add a branch,
       add positions, and create a payout template
     </p>
+    </div>
+   
     <div
-      class="mt-4 bg-black/5 p-4 rounded-lg w-70 items-center flex justify-center"
+      class="mt-4 bg-black/5 p-3 rounded-lg w-60 items-center flex justify-center"
     >
       <ActionWithIcon :icon=" DownloadIcon" text="Download company setup" />
     </div>
