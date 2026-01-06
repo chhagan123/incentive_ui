@@ -2,6 +2,7 @@ import { createRouter,createWebHistory } from "vue-router";
 
 import Home from '../views/Home.vue'
 import CompnaySetup from "../views/CompanySetup/CompanySetup.vue";
+import Branches from "../views/CompanySetup/Branches.vue";
 
 const routes = [
     {
@@ -37,7 +38,7 @@ const routes = [
             {
               path: "branches",
               name: "branch",
-              component: Home,
+              component: Branches,
               meta: { breadcrumb: "branches" },
             },
             {
