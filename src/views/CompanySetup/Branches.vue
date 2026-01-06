@@ -21,12 +21,14 @@
        
         <div class="flex gap-6 w-3/5">
           <BaseInput
+            v-model="branchCode"
             label="Branch Code"
             placeholder="Enter a Branch Code"
             required
           />
   
           <BaseInput
+            v-model="jobTitle"
             label="Job Titles"
             placeholder="Select one or more Job Titles"
             type="select"
@@ -36,6 +38,7 @@
   
         <div
           class="bg-[#CF6768] hover:bg-red-400 w-40 h-10 rounded-sm flex items-center justify-center text-white text-md mt-3 cursor-pointer"
+          @click="createBranch"
         >
           <ActionWithIcon :icon="Plus" text="Create Branch" />
         </div>
@@ -80,6 +83,9 @@
   import ClockIcon from "../../assets/icons/Clock/ClockIcon.vue";
   import DeleteIcon from "../../assets/icons/Delete/DeleteIcon.vue";
 
+  const branchCode = ref('')
+  const jobTitle = ref('')
+
   const rowData = ref<any[]>([
   { code: 'test', position: 'exec', created_at: 'November 24, 2025' },
   { code: 'team', position: 'exec', created_at: 'November 24, 2025' }
@@ -95,4 +101,24 @@ const columnDefs = [
     cellIcon: { component: DeleteIcon }
   },
 ]
+
+const formatDate = (date: Date) => {
+  return date.toLocaleDateString('en-US', {
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric'
+  })
+}
+
+
+const createBranch = () => {
+  if(!branchCode.value || !jobTitle.value) return
+  rowData.value.push({
+    code:branchCode.value,
+    position:jobTitle.value,
+    created_at: formatDate(new Date())
+  })
+   branchCode.value = ''
+  jobTitle.value = ''
+}
   </script>
