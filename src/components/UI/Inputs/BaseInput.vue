@@ -16,7 +16,7 @@
         :type="type"
         :placeholder="placeholder"
         :value="modelValue"
-        @input="updateValue($event.target.value)"
+        @input="updateValue($event?.target?.value)"
         class="w-full h-[44px] rounded-lg border border-gray-200 px-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#CF6768]"
       />
 
@@ -26,7 +26,7 @@
         type="text"
         :placeholder="placeholder"
         :value="modelValue"
-        @input="updateValue($event.target.value)"
+        @input="updateValue($event?.target?.value)"
         class="w-full h-[44px] rounded-lg border border-gray-200 px-4 pr-10 text-sm text-gray-700 placeholder-gray-400 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#CF6768]"
       />
 
@@ -57,7 +57,6 @@ const props = defineProps({
 });
 
 const emit = defineEmits(["update:modelValue"]);
-
 const updateValue = (value: string) => {
   emit("update:modelValue", value);
 };
