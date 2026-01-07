@@ -4,6 +4,7 @@ import Home from '../views/Home.vue'
 import CompnaySetup from "../views/CompanySetup/CompanySetup.vue";
 import Branches from "../views/CompanySetup/Branches.vue";
 import Postions from "../views/CompanySetup/Postions.vue";
+import PayoutTemp from "../views/CompanySetup/PayoutTemp.vue";
 
 const routes = [
     {
@@ -51,7 +52,7 @@ const routes = [
             {
              path: "payout-templates",
              name: "payout-templates",
-             component: Home,
+             component: PayoutTemp,
              meta: { breadcrumb: "pauout-templates" },
               },
             
