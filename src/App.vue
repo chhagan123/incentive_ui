@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col mx-auto">
     <Navbar />
     <!-- Main Content -->
     <main class="flex-1">
@@ -11,6 +11,7 @@
         </div>      
       </div>
     </main>
+    <Footer/>
   </div>
 </template>
 
@@ -20,6 +21,7 @@ import Navbar from "./components/Navbar.vue";
 import BreadCrumb from "./components/UI/BreadCrumbs/BreadCrumb.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
+import Footer from "./components/Footer.vue";
 
 const route = useRoute()
 
