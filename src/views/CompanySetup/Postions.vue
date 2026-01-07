@@ -40,7 +40,7 @@
         >
           <Arrow class="w-6 h-6" />
         </div>
-        <div class="text-xl font-bold text-[#000000BF]">Branches</div>
+        <div class="text-xl font-bold text-[#000000BF]">Positions</div>
       </div>
       <div class="flex gap-2">
         <input
