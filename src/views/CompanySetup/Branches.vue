@@ -32,6 +32,7 @@
             label="Job Titles"
             placeholder="Select one or more Job Titles"
             type="select"
+            :options="[...new Set(rowData.map(data => data.position))]"
             required
           />
         </div>
