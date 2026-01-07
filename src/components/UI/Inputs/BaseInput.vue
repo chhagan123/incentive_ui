@@ -30,11 +30,14 @@
         class="w-full h-[44px] rounded-lg border border-gray-200 px-4 pr-10 text-sm text-gray-700 placeholder-gray-400 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#CF6768]"
       />
       <Down
-      v-if="type == 'select'"
-    class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 cursor-pointer"
+      v-if="type == 'select' && isOpen != true"
+    class="absolute right-3 top-1/2 -translate-y-1/2 w-8 h-8 cursor-pointer"
     @click.stop="Opendrop()"
-  />
-
+    />
+   <Up v-if=" type == 'select' && isOpen"
+        class="absolute right-3 top-1/2 -translate-y-1/2 w-6 h-6 cursor-pointer"
+       @click.stop="Opendrop()"
+    />
   <!-- Dropdown menu -->
   <ul
     v-if="isOpen"
@@ -55,7 +58,9 @@
 <script setup lang="ts">
 import Down from "../../../assets/icons/Chevron/Down.vue";
 import { ref } from "vue";
+import Up from "../../../assets/icons/Chevron/Up.vue";
 const isOpen = ref(false);
+
 
 /* PROPS */
 const props = defineProps({
