@@ -53,7 +53,7 @@ const routes = [
              path: "payout-templates",
              name: "payout-templates",
              component: PayoutTemp,
-             meta: { breadcrumb: "pauout-templates" },
+             meta: { breadcrumb: "payout-templates" },
               },
             
         ]  
