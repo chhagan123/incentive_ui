@@ -65,11 +65,6 @@ const routes = [
       meta: { breadcrumb: "create payout templates" },
     },
     {
-      path: "/company-setup/payout-templates/create",
-      component: CreateTemp, 
-      meta: { breadcrumb: "create payout templates" },
-    },
-    {
       path: "/company-setup/payout-templates/details",
       component: Details, 
       meta: { breadcrumb: "Details" },
