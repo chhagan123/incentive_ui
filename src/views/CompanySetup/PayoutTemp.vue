@@ -26,6 +26,7 @@
   
         <div
           class="bg-[#CF6768] w-10 h-10 rounded-xl flex items-center justify-center text-white text-md mt-3"
+          @click="router.push('/company-setup/payout-templates/create')"
         >
           <plus/>
         </div>
@@ -70,6 +71,8 @@
   import ClockIcon from "../../assets/icons/Clock/ClockIcon.vue";
   import DeleteIcon from "../../assets/icons/Delete/DeleteIcon.vue"; 
   import EyeIcon from "../../assets/icons/Eye/EyeIcon.vue";
+  import { useRouter } from "vue-router";
+  const router = useRouter()
 
   const rowData = ref<any[]>([
    { code: 'Test', position: 'exec', created_at: 'November 24, 2025' },
