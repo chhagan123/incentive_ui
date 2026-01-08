@@ -33,7 +33,8 @@
         </div>
       </div>
       <div
-          class="bg-[#CF6768] hover:bg-red-400 w-40 h-10 rounded-sm flex items-center justify-center text-white text-md mt-3 cursor-pointer"        
+          class="bg-[#CF6768] hover:bg-red-400 w-40 h-10 rounded-sm flex items-center justify-center text-white text-md mt-3 cursor-pointer"  
+          @click="route.push('/company-setup/payout-templates/details')"      
         >
           <ActionWithIcon :isrighticon="false" :icon="RightArrow" text="Save & Next" />
         </div>
@@ -46,6 +47,8 @@
     import BaseInput from '../../components/UI/Inputs/BaseInput.vue';
     import ActionWithIcon from '../../components/UI/Buttons/ActionWithIcon.vue';
     import RightArrow from '../../assets/icons/Arrow/RightArrow.vue';
+    import { useRouter } from 'vue-router';
+    const route = useRouter()
 
 
   </script>
