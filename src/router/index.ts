@@ -5,6 +5,7 @@ import CompnaySetup from "../views/CompanySetup/CompanySetup.vue";
 import Branches from "../views/CompanySetup/Branches.vue";
 import Postions from "../views/CompanySetup/Postions.vue";
 import PayoutTemp from "../views/CompanySetup/PayoutTemp.vue";
+import CreateTemp from "../views/PayoutSetup/CreateTemp.vue";
 
 const routes = [
     {
@@ -54,10 +55,15 @@ const routes = [
              name: "payout-templates",
              component: PayoutTemp,
              meta: { breadcrumb: "payout-templates" },
-              },
-            
+              },              
         ]  
-    }
+    },
+    {
+      path: "/company-setup/payout-templates/create",
+      component: CreateTemp, 
+      meta: { breadcrumb: "create payout templates" },
+    },
+
   ]
 
   const router = createRouter({
