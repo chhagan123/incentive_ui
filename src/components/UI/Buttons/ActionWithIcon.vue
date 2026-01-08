@@ -1,14 +1,15 @@
 <template>
     <div class="flex items-center rounded-2xl">  
-      <component :is="icon" class="w-6 h-6 text-gray-400 mr-2" />
+      <component v-if="isrighticon" :is="icon" class="w-6 h-6 text-gray-400 mr-2" />
       <button @click="handleClick" class="font-medium text-nowrap ">
         {{ text }}
       </button>
     </div>
+    <component v-if="!isrighticon" :is="icon" class="w-6 h-6 text-gray-400 ml-2" />
   </template>
   
   <script setup>
-  import { defineProps, defineEmits } from "vue";
+import { defineProps, defineEmits } from "vue";
   
   const props = defineProps({
     text: {
@@ -19,6 +20,10 @@
       type: [Object, Function, String],
       default: "downloadIcon", // you can pass your icon component
     },
+    isrighticon:{
+      type:Boolean,
+      default:true
+    }
   });
   
   const emit = defineEmits(["click"]);
