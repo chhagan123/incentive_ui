@@ -6,6 +6,7 @@ import Branches from "../views/CompanySetup/Branches.vue";
 import Postions from "../views/CompanySetup/Postions.vue";
 import PayoutTemp from "../views/CompanySetup/PayoutTemp.vue";
 import CreateTemp from "../views/PayoutSetup/CreateTemp.vue";
+import Details from "../views/PayoutSetup/Details.vue";
 
 const routes = [
     {
@@ -62,6 +63,16 @@ const routes = [
       path: "/company-setup/payout-templates/create",
       component: CreateTemp, 
       meta: { breadcrumb: "create payout templates" },
+    },
+    {
+      path: "/company-setup/payout-templates/create",
+      component: CreateTemp, 
+      meta: { breadcrumb: "create payout templates" },
+    },
+    {
+      path: "/company-setup/payout-templates/details",
+      component: Details, 
+      meta: { breadcrumb: "Details" },
     },
 
   ]
