@@ -23,15 +23,14 @@
           </span>
   
           <!-- Separator -->
-          <span v-if="index !== items.length - 1" class="mx-2">
-            >
-          </span>
+          <component v-if="index !== items.length - 1" :is="Right"/>
         </li>
       </ol>
     </nav>
   </template>
   
   <script setup>
+    import Right from '../../../assets/icons/Chevron/Right.vue';
     
   const props = defineProps({
     items: {
@@ -39,6 +38,5 @@
       required: true,
     },
   });
-  console.log('items',props.items)
   </script>
   
