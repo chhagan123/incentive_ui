@@ -90,8 +90,15 @@
   },
   {label: 'View',field: 'view',
     headerIcon: { component: EyeIcon },
-    cellIcon: { component: EyeIcon }
-  },
+    cellIcon: { component: EyeIcon,
+        onClick: () => {
+        router.push({
+          path: "/company-setup/payout-templates/details",
+        })
+      },
+      }
+     }
+  ,
  ]
 
   </script>
