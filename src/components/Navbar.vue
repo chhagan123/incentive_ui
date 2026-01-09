@@ -14,7 +14,7 @@
           <nav class="hidden md:flex items-center gap-6 text-md text-white">
             <div v-for="link in links" :key="link.name" class="relative">
               <!-- Normal link -->
-              <RouterLink
+           <RouterLink
                 v-if="!link.children"
                 :to="link.to"
                 class="px-2 py-2 rounded hover:bg-white hover:text-black"
@@ -33,22 +33,28 @@
               >
                 {{ link.name }}
                 <Down class="w-7 h-7"/>
-              </button>
+              </button>            
               <div
                 v-if="activeDropdown === link.name"
                 @click="activeDropdown = null"
-                class="absolute left-0 top-full mt-2 w-40 bg-[#1b2430] rounded-md shadow-lg"
+                class="absolute left-0 top-full mt-2 w-50 bg-[#1b2430] rounded-md shadow-lg "
               >
-                <RouterLink
-                  v-for="child in link.children"
-                  :key="child.name"
-                  :to="child.to"
-                  class="block px-4 py-2 text-white hover:bg-white/10"
-                  active-class="font-semibold"
-                  @click="isactive = true"
-                >
-                  {{ child.name }}
-                </RouterLink>
+           <RouterLink
+               v-for="child in link.children"
+               :key="child.name"
+               :to="child.to"
+               class="flex items-center gap-2 px-4 py-2 text-white/75 hover:bg-white/10 text-nowrap"
+               active-class="font-semibold"
+               @click="isactive = true"
+              >
+              <!-- ICON -->
+            <component
+              v-if="child.icon"
+             :is="child.icon"
+              class="w-5 h-5"
+              />
+                 {{ child.name }}
+             </RouterLink>
               </div>
             </div>
           </nav>
@@ -58,12 +64,16 @@
         <div class="flex items-center gap-4">
           <!-- Account -->
           <div class="relative hidden md:block">
+            <div class="flex gap-1 items-center justify-center">
+              <component :is="PersonIconBlack" class="w-5 h-5"/>
             <button
               @click="accountTab = !accountTab"
-              class="text-white px-3 py-2 rounded hover:bg-white hover:text-black"
+              class="text-white  py-2 rounded hover:bg-white hover:text-black"
             >
               My Account
             </button>
+            </div>
+         
   
             <div
               v-if="accountTab"
@@ -130,6 +140,10 @@
   <script setup lang="ts">
   import { ref } from "vue";
   import Down from "../assets/icons/Chevron/Down.vue";
+  import PersonIconBlack from "../assets/icons/Person/PersonIconBlack.vue";
+  import JobIconWhite from "../assets/icons/Job/JobIconWhite.vue";
+  import DashboardIcon from "../assets/icons/Dashboard/White.vue";
+  import ScreenIcon from "../assets/icons/Screen/White.vue"
   
   const mobileMenu = ref(false);
   const accountTab = ref(false);
@@ -145,9 +159,9 @@
       name: "CompanySetup",
       to: "/company-setup",
       children: [
-        { name: "Branch", to: "/company-setup/branches" },
-        { name: "Position", to: "/company-setup/positions" },
-        { name: "Postion layout", to: "/company-setup/payout-templates" },
+        { name: "Branches", to: "/company-setup/branches",icon:ScreenIcon },
+        { name: "Position", to: "/company-setup/positions",icon:JobIconWhite },
+        { name: "Postion layout", to: "/company-setup/payout-templates",icon:DashboardIcon },
       ],
     },
     {
