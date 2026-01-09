@@ -60,16 +60,27 @@ const routes = [
         ]  
     },
     {
-      path: "/company-setup/payout-templates/create",
-      component: CreateTemp, 
-      meta: { breadcrumb: "create payout templates" },
-    },
-    {
-      path: "/company-setup/payout-templates/details",
-      component: Details, 
-      meta: { breadcrumb: "Details" },
-    },
-
+      path: "/company-setup",
+      meta: { breadcrumb: "Company Setup" },
+      children: [
+        {
+          path: "payout-templates",
+          meta: { breadcrumb: "Payout Templates" },
+          children: [
+            {
+              path: "create",
+              component: CreateTemp,
+              meta: { breadcrumb: "Create" },
+            },
+            {
+              path: "details",
+              component: Details,
+              meta: { breadcrumb: "Details" },
+            },
+          ],
+        },
+      ],
+    }
   ]
 
   const router = createRouter({
