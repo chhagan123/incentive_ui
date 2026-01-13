@@ -27,14 +27,15 @@
             required
           />
   
-          <BaseInput
+       
+          <CustomSelect
             v-model="jobTitle"
             label="Job Titles"
             placeholder="Select one or more Job Titles"
-            type="select"
-            :options="setupStore.postions"
-            required
+           :options="setupStore.postions"
+           required
           />
+          
         </div>
   
         <div
@@ -84,7 +85,7 @@
   import ClockIcon from "../../assets/icons/Clock/ClockIcon.vue";
   import DeleteIcon from "../../assets/icons/Delete/DeleteIcon.vue";
   import { useSetupStore } from "../../stores/setup";
-
+  import CustomSelect from "../../components/UI/Inputs/CustomSelect.vue";
   const setupStore = useSetupStore()
 
   const branchCode = ref('')
