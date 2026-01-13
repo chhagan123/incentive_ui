@@ -23,8 +23,8 @@
       <!-- Select (UI only for now) -->
       <input
         v-else
-        type="text"
         :placeholder="placeholder"
+         readonly
         :value="modelValue"
         @input="updateValue($event?.target?.value)"
         class="w-full h-[44px] rounded-lg border border-gray-200 px-4 pr-10 text-sm text-gray-700 placeholder-gray-400 cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#CF6768]"
