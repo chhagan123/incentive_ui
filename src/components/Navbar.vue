@@ -9,9 +9,11 @@
             alt="Incentive Logo"
             class="h-6 w-auto"
           />
+
+          <h1 v-if='!token' class="text-xl text-white">IncentiveEngine</h1>
   
           <!-- Desktop Navigation -->
-          <nav class="hidden md:flex items-center gap-6 text-md text-white">
+          <nav v-if="token" class="hidden md:flex items-center gap-6 text-md text-white">
             <div v-for="link in links" :key="link.name" class="relative">
               <!-- Normal link -->
            <RouterLink
@@ -138,7 +140,7 @@
   </template>
   
   <script setup lang="ts">
-  import { ref } from "vue";
+  import { ref,onBeforeMount } from "vue";
   import Down from "../assets/icons/Chevron/Down.vue";
   import PersonIconBlack from "../assets/icons/Person/PersonIconBlack.vue";
   import JobIconWhite from "../assets/icons/Job/JobIconWhite.vue";
@@ -149,6 +151,7 @@
   const accountTab = ref(false);
   const activeDropdown = ref(null);
   const isactive = ref(false)
+  const token = ref<any>('')
   
   const links = [
     {
@@ -181,4 +184,10 @@
       activeDropdown.value = name;
     }
   };
+
+  onBeforeMount(() => {
+  const val = localStorage.getItem('token') || ''
+  token.value = val
+
+ })
   </script>
