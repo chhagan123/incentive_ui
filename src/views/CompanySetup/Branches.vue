@@ -32,7 +32,7 @@
             label="Job Titles"
             placeholder="Select one or more Job Titles"
             type="select"
-            :options="[...new Set(rowData.map(data => data.position))]"
+            :options="setupStore.postions"
             required
           />
         </div>
@@ -83,6 +83,9 @@
   import JobIcon from "../../assets/icons/Job/JobIcon.vue";
   import ClockIcon from "../../assets/icons/Clock/ClockIcon.vue";
   import DeleteIcon from "../../assets/icons/Delete/DeleteIcon.vue";
+  import { useSetupStore } from "../../stores/setup";
+
+  const setupStore = useSetupStore()
 
   const branchCode = ref('')
   const jobTitle = ref('')
