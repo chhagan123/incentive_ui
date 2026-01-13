@@ -7,8 +7,15 @@ import Postions from "../views/CompanySetup/Postions.vue";
 import PayoutTemp from "../views/CompanySetup/PayoutTemp.vue";
 import CreateTemp from "../views/PayoutSetup/CreateTemp.vue";
 import Details from "../views/PayoutSetup/Details.vue";
+import Login from "../views/Authentication/Login.vue";
 
 const routes = [
+
+    {
+    path:"/auth/login",
+    component:Login,
+
+    },
     {
       path: "/",
       component: Home,
