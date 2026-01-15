@@ -10,3 +10,13 @@ export const getPositions = async () => {
       throw error
     }
   }
+
+  export const postPositions = async (payload:any) => {
+    try {
+        const response = await axios.post('/api/v2/setup/positions',payload)
+        return response
+    }catch (error){
+          console.error('failed to fetch error',error)
+          throw error
+    }
+  }
