@@ -86,7 +86,15 @@ console.log('setupstor',setupStore.positionsData.value)
 
 const columnDefs = [
 { label: 'Name', field: 'name', headerIcon: { component: CodeIcon } },
-{ label: 'Branches', field: 'branches', headerIcon: { component: JobIcon } },
+{ label: 'Branches',
+  field: 'branch_ids',
+  valueGetter: (row:any) => {
+  return setupStore.branchesData
+    ?.filter((branch:any) => row.branch_ids?.includes(branch.id))
+    .map((branch:any) => branch.code)
+    .join(', ') || '-'
+},
+  headerIcon: { component: JobIcon } },
 { label: 'Created at', field: 'created_at', headerIcon: { component: ClockIcon } },
 {label: 'Delete',field: 'delete',
     headerIcon: { component: DeleteIcon },
@@ -99,16 +107,6 @@ const columnDefs = [
   },
 ]
 
-const formatDate = (date: Date) => {
-  return date.toLocaleDateString('en-US', {
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric'
-  })
-}
-
-
-//createPostions
 const createPosition = async () => {
   // Validate input
   if (!positions.value || !positions.value.trim()) return
@@ -127,11 +125,9 @@ const createPosition = async () => {
 //DeletePostions
 
 const deletePositions = async(positionId:any) => {
-
   try {
     if(confirm('are you sure want to delte these positions')){
-    await setupStore.removePositions(positionId)
-    console.log('Deleted position:', positionId)}
+    await setupStore.removePositions(positionId)}
   } catch (error) {
     console.log('error',error)
   }
