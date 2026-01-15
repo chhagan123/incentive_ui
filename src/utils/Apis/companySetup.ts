@@ -1,5 +1,11 @@
 import axios from "./axios"
 
+//branches 
+
+export const getBranches = async () => {
+  return await axios.get('/api/v2/setup/branches').then((res) => res.data)
+}
+
 // postion add/get/and delete
 export const getPositions = async () => {
     try {

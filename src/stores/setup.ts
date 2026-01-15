@@ -1,12 +1,42 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { getPositions,postPositions,deletePositions } from "../utils/Apis/companySetup";
+import { 
+  getPositions,
+  postPositions,
+  deletePositions,
+  getBranches 
+
+} from "../utils/Apis/companySetup";
 
 export const useSetupStore = defineStore("setup", () => {
   const positionsData = ref<any>([])
+  const branchesData = ref<any>([])
   const loading = ref<boolean>(false)
-  // get positions
 
+
+   //helper function formdate
+  const formatDate = (dateStr:Date) => {
+    if (!dateStr) return '-'
+    return new Date(dateStr).toLocaleString('en-IN', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+    })
+  }
+
+  //getBranches data
+
+  const fetchBranches = async () => {
+    const data = await getBranches()
+  
+    branchesData.value = data.branches.map((branch:any )=> ({
+      ...branch,
+      created_at: formatDate(branch.created_at),
+      // updated_at: formatDate(branch.updated_at)
+    }))
+  }
+  
+  // get positions
   const fetchPositions = async () => {
     const data = await getPositions();
     positionsData.value = data.positions
@@ -63,6 +93,8 @@ export const useSetupStore = defineStore("setup", () => {
     addPositions,
     positionsData,
     loading,
-    removePositions
+    removePositions,
+    branchesData,
+    fetchBranches
   };
 });
