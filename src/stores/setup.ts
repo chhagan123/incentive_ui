@@ -1,20 +1,50 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { getPositions } from "../utils/Apis/companySetup";
+import { getPositions,postPositions } from "../utils/Apis/companySetup";
 
 export const useSetupStore = defineStore("setup", () => {
-  const postions = ref<any>([]);
+  
+  const positionsData = ref<any>([])
+  const loading = ref<boolean>(false)
   // get positions
 
   const fetchPositions = async () => {
     const data = await getPositions();
-    postions.value = data.positions.map((da: any) => da.name);
+    positionsData.value = data.positions
   };
 
-  fetchPositions();
+ 
+  const addPositions = async (payload: any) => {
+    loading.value = true
+  
+    try {
+      // Artificial delay for loader visibility
+      await new Promise(resolve => setTimeout(resolve, 300)) // 300ms
+  
+      const response = await postPositions(payload)
+  
+      if (response.status === 201) {
+        if (response) {
+          positionsData.value = response.data.position
+        }
+        alert('Position added successfully')
+      } else {
+        alert('Something went wrong')
+      }
+    } catch (err) {
+      console.error(err)
+      alert('Error occurred while adding position')
+    } finally {
+      loading.value = false
+    }
+  }
+  
   
   return {
-    postions,
+    positions,
     fetchPositions,
+    addPositions,
+    positionsData,
+    loading
   };
 });
