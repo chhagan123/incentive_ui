@@ -56,7 +56,7 @@
   
   onMounted(() => {
     if (token.value != '') {
-      window.location.href = `${url}/overview`
+      window.location.href = `/company-setup/branches`
     }
   })
   </script>
