@@ -65,7 +65,7 @@
         </div>
       </div>  
       <div class="border-3 border-black/10 h-70  rounded-xl">
-      <BaseTable :rowData="rowData" :columnDefs="columnDefs" />
+      <BaseTable :rowData="setupStore.branchesData" :columnDefs="columnDefs" />
     </div>
     </div>
   </template>
@@ -94,10 +94,16 @@
   { code: 'team', position: 'exec', created_at: 'November 24, 2025' }
 ])
 
-
 const columnDefs = [
 { label: 'Code', field: 'code', headerIcon: { component: CodeIcon } },
-{ label: 'Postion', field: 'position', headerIcon: { component: JobIcon } },
+{ label: 'Postion', 
+ field: 'positions',
+ valueGetter: (row:any) => {
+  return row.positions
+    ?.map((pos:any) => pos.name)
+    .join(', ') || '-'
+},
+ headerIcon: { component: JobIcon } },
 { label: 'Created at', field: 'created_at', headerIcon: { component: ClockIcon } },
 {label: 'Delete',field: 'delete',
     headerIcon: { component: DeleteIcon },
@@ -127,5 +133,6 @@ const createBranch = () => {
 
 onMounted(() => {
   setupStore.fetchPositions()
+  setupStore.fetchBranches()
 })
   </script>
