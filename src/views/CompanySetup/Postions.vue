@@ -20,7 +20,7 @@
        
         <div class="flex gap-6 w-3/5">
           <BaseInput
-            v-model="Position"
+            v-model="positions"
             label="Branch Code"
             placeholder="Enter a Postion Name"
             required
@@ -29,9 +29,9 @@
   
         <div
           class="bg-[#CF6768] hover:bg-red-400 w-40 h-10 rounded-sm flex items-center justify-center text-white text-md mt-3 cursor-pointer"
-          @click="createPostion"
+          @click="createPosition"
         >
-          <ActionWithIcon :icon="Plus" text="Create Postion" />
+          <ActionWithIcon :icon="Plus" :loading="setupStore.loading" text="Create Postion" />
         </div>
       </div>
       <div class="gap-2 flex items-center">
@@ -56,7 +56,7 @@
         </div>
       </div>  
       <div class="border-3 border-black/10 h-70  rounded-xl">
-      <BaseTable :rowData="rowData" :columnDefs="columnDefs" />
+      <BaseTable :rowData="setupStore.positionsData" :columnDefs="columnDefs" />
     </div>
     </div>
   </template>
@@ -68,24 +68,25 @@
   import Plus from "../../assets/icons/Plus/PlusIcon.vue";
   import SearchIcon from "../../assets/icons/Search/SearchIcon.vue";
   import BaseTable from "../../components/UI/Tables/BaseTable.vue";
-  import {ref} from 'vue'
+  import {onMounted, ref} from 'vue'
   import CodeIcon from "../../assets/icons/Code/CodeIcon.vue";
   import JobIcon from "../../assets/icons/Job/JobIcon.vue";
   import ClockIcon from "../../assets/icons/Clock/ClockIcon.vue";
   import DeleteIcon from "../../assets/icons/Delete/DeleteIcon.vue";
+  import { useSetupStore } from "../../stores/setup";
 
-  const Position = ref('')
- 
+  const setupStore = useSetupStore()
+  const positions = ref<string>('')
 
-  const rowData = ref<any[]>([
-  { code: 'test', position: 'exec', created_at: 'November 24, 2025' },
-  { code: 'team', position: 'exec', created_at: 'November 24, 2025' }
-])
+//   const rowData = ref<any[]>([
+//   { code: 'test', position: 'exec', created_at: 'November 24, 2025' },
+//   { code: 'team', position: 'exec', created_at: 'November 24, 2025' }
+// ])
 
 
 const columnDefs = [
-{ label: 'Name', field: 'position', headerIcon: { component: CodeIcon } },
-{ label: 'Branches', field: 'code', headerIcon: { component: JobIcon } },
+{ label: 'Name', field: 'name', headerIcon: { component: CodeIcon } },
+{ label: 'Branches', field: 'branches', headerIcon: { component: JobIcon } },
 { label: 'Created at', field: 'created_at', headerIcon: { component: ClockIcon } },
 {label: 'Delete',field: 'delete',
     headerIcon: { component: DeleteIcon },
@@ -102,12 +103,23 @@ const formatDate = (date: Date) => {
 }
 
 
-const createPostion = () => {
-  if(!Position) return
-  rowData.value.push({
-    position:Position.value,
-    created_at: formatDate(new Date())
-  })
-  Position.value =''
+const createPosition = async () => {
+  // Validate input
+  if (!positions.value || !positions.value.trim()) return
+
+  try {
+    await setupStore.addPositions({
+      name: positions.value.trim()
+    })
+
+    positions.value = ""
+  } catch (error) {
+    console.error("Failed to create position:", error)
+  }
 }
+
+onMounted(() => {
+  setupStore.fetchPositions()
+})
+
   </script>
