@@ -26,14 +26,12 @@
             placeholder="Enter a Branch Code"
             required
           />
-  
-       
           <CustomSelect
             v-model="jobTitle"
             label="Job Titles"
             placeholder="Select one or more Job Titles"
-           :options="setupStore.postions"
-           required
+           :options="setupStore.positionsData.map((da: any) => da.name)"
+            required
           />
           
         </div>
@@ -79,7 +77,7 @@
   import Plus from "../../assets/icons/Plus/PlusIcon.vue";
   import SearchIcon from "../../assets/icons/Search/SearchIcon.vue";
   import BaseTable from "../../components/UI/Tables/BaseTable.vue";
-  import {ref} from 'vue'
+  import {onMounted, ref, watch} from 'vue'
   import CodeIcon from "../../assets/icons/Code/CodeIcon.vue";
   import JobIcon from "../../assets/icons/Job/JobIcon.vue";
   import ClockIcon from "../../assets/icons/Clock/ClockIcon.vue";
@@ -126,4 +124,8 @@ const createBranch = () => {
    branchCode.value = ''
   jobTitle.value = ''
 }
+
+onMounted(() => {
+  setupStore.fetchPositions()
+})
   </script>
