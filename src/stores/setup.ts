@@ -1,9 +1,8 @@
 import { defineStore } from "pinia";
 import { ref } from "vue";
-import { getPositions,postPositions } from "../utils/Apis/companySetup";
+import { getPositions,postPositions,deletePositions } from "../utils/Apis/companySetup";
 
 export const useSetupStore = defineStore("setup", () => {
-  
   const positionsData = ref<any>([])
   const loading = ref<boolean>(false)
   // get positions
@@ -16,17 +15,16 @@ export const useSetupStore = defineStore("setup", () => {
  
   const addPositions = async (payload: any) => {
     loading.value = true
-  
     try {
-      // Artificial delay for loader visibility
-      await new Promise(resolve => setTimeout(resolve, 300)) // 300ms
-  
       const response = await postPositions(payload)
   
       if (response.status === 201) {
         if (response) {
           positionsData.value = response.data.position
         }
+  
+        // Push to positionsData array
+        positionsData.value.push(newPos)
         alert('Position added successfully')
       } else {
         alert('Something went wrong')
@@ -37,14 +35,29 @@ export const useSetupStore = defineStore("setup", () => {
     } finally {
       loading.value = false
     }
+  }      
+
+  const removePositions = async (positionId: any) => {
+    loading.value = true
+    try {
+      await deletePositions(positionId)
+      positionsData.value = positionsData.value.filter(
+        (pos: any) => pos.id !== positionId
+      )
+      alert('Successfully deleted')
+    } catch (error) {
+      console.error('Error deleting position:', error)
+      alert('Error deleting position')
+    } finally {
+      loading.value = false
+    }
   }
   
-  
   return {
-    positions,
     fetchPositions,
     addPositions,
     positionsData,
-    loading
+    loading,
+    removePositions
   };
 });

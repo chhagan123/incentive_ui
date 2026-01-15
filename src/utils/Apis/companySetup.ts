@@ -20,3 +20,8 @@ export const getPositions = async () => {
           throw error
     }
   }
+
+  export const deletePositions = async(positionId:any) => {
+    return await axios.delete(`/api/v2/setup/positions/${positionId}`).then((response) => response.data)
+    
+  }

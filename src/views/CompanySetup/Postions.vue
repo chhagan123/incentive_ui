@@ -82,7 +82,7 @@
 //   { code: 'test', position: 'exec', created_at: 'November 24, 2025' },
 //   { code: 'team', position: 'exec', created_at: 'November 24, 2025' }
 // ])
-
+console.log('setupstor',setupStore.positionsData.value)
 
 const columnDefs = [
 { label: 'Name', field: 'name', headerIcon: { component: CodeIcon } },
@@ -90,7 +90,12 @@ const columnDefs = [
 { label: 'Created at', field: 'created_at', headerIcon: { component: ClockIcon } },
 {label: 'Delete',field: 'delete',
     headerIcon: { component: DeleteIcon },
-    cellIcon: { component: DeleteIcon }
+    cellIcon: { 
+      component: DeleteIcon,
+      onClick:(rowData:any) =>{
+         deletePositions(rowData.id)
+        }
+     }
   },
 ]
 
@@ -103,6 +108,7 @@ const formatDate = (date: Date) => {
 }
 
 
+//createPostions
 const createPosition = async () => {
   // Validate input
   if (!positions.value || !positions.value.trim()) return
@@ -118,8 +124,21 @@ const createPosition = async () => {
   }
 }
 
+//DeletePostions
+
+const deletePositions = async(positionId:any) => {
+
+  try {
+    if(confirm('are you sure want to delte these positions')){
+    await setupStore.removePositions(positionId)
+    console.log('Deleted position:', positionId)}
+  } catch (error) {
+    console.log('error',error)
+  }
+
+}
+
 onMounted(() => {
   setupStore.fetchPositions()
 })
-
   </script>
