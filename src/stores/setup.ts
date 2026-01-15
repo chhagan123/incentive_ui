@@ -12,15 +12,20 @@ export const useSetupStore = defineStore("setup", () => {
     positionsData.value = data.positions
   };
 
- 
   const addPositions = async (payload: any) => {
     loading.value = true
     try {
       const response = await postPositions(payload)
   
-      if (response.status === 201) {
-        if (response) {
-          positionsData.value = response.data.position
+      if (response.status === 201 && response.data?.position) {
+        // Convert created_at to human-readable date (DD MMM YYYY)
+        const newPos = {
+          ...response.data.position,
+          created_at: new Date(response.data.position.created_at).toLocaleDateString('en-IN', {
+            day: '2-digit',
+            month: 'short',
+            year: 'numeric',
+          }),
         }
   
         // Push to positionsData array
@@ -35,7 +40,7 @@ export const useSetupStore = defineStore("setup", () => {
     } finally {
       loading.value = false
     }
-  }      
+  }  
 
   const removePositions = async (positionId: any) => {
     loading.value = true
