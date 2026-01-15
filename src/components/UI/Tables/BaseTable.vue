@@ -40,7 +40,7 @@
           >
             <div class="flex items-center gap-2">
               <!-- Normal row value -->
-              <span>{{ row[col.field] }}</span>
+              <span> {{ col.valueGetter ? col.valueGetter(row) : row[col.field] }}</span>
   
               <!-- Row Icon(s) -->
               <template v-if="col.cellIcon">
@@ -75,6 +75,7 @@
     field: string
     headerIcon?: IconConfig
     cellIcon?: IconConfig | IconConfig[]
+    valueGetter?:(row?:any) => void
   }
   
   /*PROPS */
