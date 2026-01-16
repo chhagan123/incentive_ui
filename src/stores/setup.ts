@@ -6,7 +6,8 @@ import {
   deletePositions,
   getBranches,
   postBranches,
-  deleteBranches 
+  deleteBranches,
+  getPayoutTemp 
 
 } from "../utils/Apis/companySetup";
 
@@ -14,6 +15,7 @@ export const useSetupStore = defineStore("setup", () => {
   const positionsData = ref<any>([])
   const branchesData = ref<any>([])
   const loading = ref<boolean>(false)
+  const payoutTempData = ref<any>([])
 
 
    //helper function formdate
@@ -120,6 +122,23 @@ export const useSetupStore = defineStore("setup", () => {
       loading.value = false
     }
   }
+
+
+  //Payout template
+  
+  // get payoutTemp
+
+  const fetchPayoutTemp = async() => {
+    const data = await getPayoutTemp()    
+
+      payoutTempData.value = data.templates.map((temp:any )=> ({
+      ...temp,
+      created_at: formatDate(temp.created_at),
+      // updated_at: formatDate(branch.updated_at)
+    }))
+    console.log("pay",payoutTempData)
+  }
+
   
   return {
     fetchPositions,
@@ -130,6 +149,8 @@ export const useSetupStore = defineStore("setup", () => {
     branchesData,
     fetchBranches,
     addBranches,
-    removeBranches
+    removeBranches,
+    fetchPayoutTemp,
+    payoutTempData
   };
 });

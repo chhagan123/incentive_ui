@@ -42,3 +42,11 @@ export const getPositions = async () => {
     return await axios.delete(`/api/v2/setup/positions/${positionId}`).then((response) => response.data)
     
   }
+
+  // payout templates
+
+  //getPayout templateData
+
+  export const getPayoutTemp = async () => {
+    return await axios.get('/api/v2/setup/templates').then((res) => res.data)
+  }

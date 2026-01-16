@@ -53,7 +53,7 @@
         </div>
       </div>
       <div class="border-3 border-black/10 h-70  rounded-xl">
-      <BaseTable :rowData="rowData" :columnDefs="columnDefs" />
+      <BaseTable :rowData="setupStore.payoutTempData" :columnDefs="columnDefs" />
     </div> 
     </div>
   </template>
@@ -65,24 +65,27 @@
   import Plus from "../../assets/icons/Plus/PlusIcon.vue";
   import SearchIcon from "../../assets/icons/Search/SearchIcon.vue";
   import BaseTable from "../../components/UI/Tables/BaseTable.vue";
-  import {ref} from 'vue'
+  import {onMounted, ref} from 'vue'
   import CodeIcon from "../../assets/icons/Code/CodeIcon.vue";
   import JobIcon from "../../assets/icons/Job/JobIcon.vue";
   import ClockIcon from "../../assets/icons/Clock/ClockIcon.vue";
   import DeleteIcon from "../../assets/icons/Delete/DeleteIcon.vue"; 
   import EyeIcon from "../../assets/icons/Eye/EyeIcon.vue";
   import { useRouter } from "vue-router";
+  import { useSetupStore } from "../../stores/setup";
   const router = useRouter()
-
-  const rowData = ref<any[]>([
-   { code: 'Test', position: 'exec', created_at: 'November 24, 2025' },
-   { code: 'team', position: 'exec', created_at: 'November 24, 2025' }
-  ])
+  const setupStore = useSetupStore()
 
 
  const columnDefs = [
-  { label: 'Name', field: 'position', headerIcon: { component: JobIcon } },
-  { label: 'Branches', field: 'code', headerIcon: { component: CodeIcon } },
+  { label: 'Name', field: 'name', headerIcon: { component: JobIcon } },
+  { label: 'Branches',
+    field: 'code', 
+    valueGetter:(raw:any) => {
+      console.log('r',raw.branches)
+     return raw.branches?.map((branch:any) => branch.code).join(', ') || " - "
+    },
+    headerIcon: { component: CodeIcon } },
   { label: 'Created at', field: 'created_at', headerIcon: { component: ClockIcon } },
   {label: 'Delete',field: 'delete',
     headerIcon: { component: DeleteIcon },
@@ -100,6 +103,8 @@
      }
   ,
  ]
-
+onMounted(() => {
+  setupStore.fetchPayoutTemp()
+})
   </script>
   
