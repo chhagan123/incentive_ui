@@ -7,7 +7,8 @@ import {
   getBranches,
   postBranches,
   deleteBranches,
-  getPayoutTemp 
+  getPayoutTemp,
+  postPayoutTemp 
 
 } from "../utils/Apis/companySetup";
 
@@ -139,7 +140,19 @@ export const useSetupStore = defineStore("setup", () => {
     console.log("pay",payoutTempData)
   }
 
-  
+  // add payoutTemp
+  const addPayoutTemp = async (payload: any) => {
+    loading.value = true;
+    try {
+      const data = await postPayoutTemp(payload);
+      return data;
+    } catch (error) {
+      throw error;
+    } finally {
+      loading.value = false;
+    }
+  };
+
   return {
     fetchPositions,
     addPositions,
@@ -151,6 +164,7 @@ export const useSetupStore = defineStore("setup", () => {
     addBranches,
     removeBranches,
     fetchPayoutTemp,
-    payoutTempData
+    payoutTempData,
+    addPayoutTemp
   };
 });

@@ -50,3 +50,8 @@ export const getPositions = async () => {
   export const getPayoutTemp = async () => {
     return await axios.get('/api/v2/setup/templates').then((res) => res.data)
   }
+
+  //addPayout template
+  export const postPayoutTemp = async (payload:any) => {
+    return await axios.post('/api/v2/setup/templates',payload)
+  }
