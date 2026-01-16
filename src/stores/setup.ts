@@ -5,7 +5,8 @@ import {
   postPositions,
   deletePositions,
   getBranches,
-  postBranches 
+  postBranches,
+  deleteBranches 
 
 } from "../utils/Apis/companySetup";
 
@@ -50,7 +51,23 @@ export const useSetupStore = defineStore("setup", () => {
     }
     return res;
   };
-  
+   
+  //deleteBranch
+
+  const removeBranches = async (positionId: any) => {
+    try {
+      await deleteBranches(positionId)
+      branchesData.value = branchesData.value.filter(
+        (pos: any) => pos.id !== positionId
+      )
+      alert('Successfully deleted')
+    } catch (error) {
+      console.error('Error deleting position:', error)
+      alert('Error deleting position')
+    } finally {
+     
+    }
+  }
   
   // get positions
   const fetchPositions = async () => {
@@ -112,6 +129,7 @@ export const useSetupStore = defineStore("setup", () => {
     removePositions,
     branchesData,
     fetchBranches,
-    addBranches
+    addBranches,
+    removeBranches
   };
 });

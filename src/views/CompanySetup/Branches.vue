@@ -107,7 +107,12 @@ const columnDefs = [
 { label: 'Created at', field: 'created_at', headerIcon: { component: ClockIcon } },
 {label: 'Delete',field: 'delete',
     headerIcon: { component: DeleteIcon },
-    cellIcon: { component: DeleteIcon }
+    cellIcon: { 
+      component: DeleteIcon,
+      onClick:(row:any) => {
+            deleteBranch(row.id)
+      } 
+    }
   },
 ]
 
@@ -119,7 +124,7 @@ const formatDate = (date: Date) => {
   })
 }
 
-
+//create branch
 const createBranch = async () => {
   // validate required fields
   if (!branchCode.value?.trim()) {
@@ -158,6 +163,19 @@ const createBranch = async () => {
   branchCode.value = "";
   jobTitle.value = [];
 };
+
+//delete Branch
+
+const deleteBranch = async(rowDataId:any) => {
+
+  try {
+    if(confirm('are you sure want to delte these Branch')){
+    await setupStore.removeBranches(rowDataId)}
+  } catch (error) {
+    console.log('error',error)
+  }
+
+}
 
 onMounted(() => {
   setupStore.fetchPositions()

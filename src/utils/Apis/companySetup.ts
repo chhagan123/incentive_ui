@@ -12,6 +12,11 @@ export const postBranches = async (payload:any) => {
   return await axios.post('/api/v2/setup/branches',payload)
 }
 
+//deleteBranch
+export const deleteBranches = async(positionId:any) => {
+  return await axios.delete(`/api/v2/setup/branches/${positionId}`).then((response) => response.data)
+}
+
 // postion add/get/and delete
 export const getPositions = async () => {
     try {
