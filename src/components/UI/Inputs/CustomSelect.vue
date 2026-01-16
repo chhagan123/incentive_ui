@@ -16,7 +16,7 @@
         <!-- Input -->
         <input
           :placeholder="placeholder"
-          :value="modelValue"
+          :value="displayValue"
           readonly
           role="combobox"
           aria-haspopup="listbox"
@@ -59,7 +59,7 @@
             v-for="option in options"
             :key="option"
             class="px-4 py-2 hover:bg-gray-100 cursor-pointer"
-            @click="selectOption(option)"
+              @click="toggleOption(option)"
           >
             {{ option }}
           </li>
@@ -69,14 +69,14 @@
   </template>
   
   <script setup>
-  import { ref, onMounted, onBeforeUnmount } from "vue"
+  import { ref, onMounted, onBeforeUnmount,computed } from "vue"
   import Down from "../../../assets/icons/Chevron/Down.vue"
   import Up from "../../../assets/icons/Chevron/Up.vue"
   
   const props = defineProps({
     modelValue: {
-      type: String,
-      default: ""
+      type: Array,
+      default: () => []
     },
     options: {
       type: Array,
@@ -114,10 +114,26 @@
     isOpen.value = false
   }
   
-  const selectOption = (option) => {
-    emit("update:modelValue", option)
-    closeDropdown()
+  const displayValue = computed(() =>
+  props.modelValue.length ? props.modelValue.join(", ") : ""
+)
+
+const toggleOption = (option) => {
+  const selected = [...props.modelValue]
+
+  if (selected.includes(option)) {
+    emit(
+      "update:modelValue",
+      selected.filter(item => item !== option)
+    )
+  } else {
+    emit(
+      "update:modelValue",
+      [...selected, option]
+    )
   }
+}
+
   
   // Close on outside click
   const handleClickOutside = (e) => {
