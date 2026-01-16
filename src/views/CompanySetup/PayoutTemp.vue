@@ -77,32 +77,62 @@
   const setupStore = useSetupStore()
 
 
- const columnDefs = [
-  { label: 'Name', field: 'name', headerIcon: { component: JobIcon } },
-  { label: 'Branches',
-    field: 'code', 
-    valueGetter:(raw:any) => {
-      console.log('r',raw.branches)
-     return raw.branches?.map((branch:any) => branch.code).join(', ') || " - "
+  const columnDefs = [
+  { label: "Name", field: "name", headerIcon: { component: JobIcon } },
+  {
+    label: "Branches",
+    field: "code",
+    valueGetter: (raw: any) => {
+      console.log("r", raw.branches);
+      return (
+        raw.branches?.map((branch: any) => branch.code).join(", ") || " - "
+      );
     },
-    headerIcon: { component: CodeIcon } },
-  { label: 'Created at', field: 'created_at', headerIcon: { component: ClockIcon } },
-  {label: 'Delete',field: 'delete',
-    headerIcon: { component: DeleteIcon },
-    cellIcon: { component: DeleteIcon }
+    headerIcon: { component: CodeIcon },
   },
-  {label: 'View',field: 'view',
+  {
+    label: "Created at",
+    field: "created_at",
+    headerIcon: { component: ClockIcon },
+  },
+  {
+    label: "Delete",
+    field: "delete",
+    headerIcon: { component: DeleteIcon },
+    cellIcon: {
+      component: DeleteIcon,
+      onClick: (raw: any) => {
+        deletePayoutTemp(raw.id);
+      },
+    },
+  },
+  {
+    label: "View",
+    field: "view",
     headerIcon: { component: EyeIcon },
-    cellIcon: { component: EyeIcon,
-        onClick: () => {
+    cellIcon: {
+      component: EyeIcon,
+      onClick: () => {
         router.push({
           path: "/company-setup/payout-templates/details",
-        })
+        });
       },
+    },
+  },
+];
+
+ const deletePayoutTemp = async (templateId: string) => {
+  try {
+    if (confirm("are you sure to delete these template")) {
+      const res = await setupStore.removePayoutTemp(templateId);
+      if (res.status == 200) {
+        alert("Payout template deleted succesfully");
       }
-     }
-  ,
- ]
+    }
+  } catch (error) {
+    throw error;
+  }
+};
 onMounted(() => {
   setupStore.fetchPayoutTemp()
 })

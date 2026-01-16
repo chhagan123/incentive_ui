@@ -8,7 +8,8 @@ import {
   postBranches,
   deleteBranches,
   getPayoutTemp,
-  postPayoutTemp 
+  postPayoutTemp,
+  deletePayoutTemp 
 
 } from "../utils/Apis/companySetup";
 
@@ -153,6 +154,23 @@ export const useSetupStore = defineStore("setup", () => {
     }
   };
 
+  const removePayoutTemp = async (templateId: any) => {
+    try {
+      const res = await deletePayoutTemp(templateId);
+  
+      if (res.status === 200 || res.status === 204) {
+        payoutTempData.value = payoutTempData.value.filter(
+          (temp: any) => temp.id !== templateId
+        );
+      }
+  
+      return res;
+    } catch (error) {
+      console.error('Delete failed', error);
+    }
+  };
+  
+
   return {
     fetchPositions,
     addPositions,
@@ -165,6 +183,7 @@ export const useSetupStore = defineStore("setup", () => {
     removeBranches,
     fetchPayoutTemp,
     payoutTempData,
-    addPayoutTemp
+    addPayoutTemp,
+    removePayoutTemp
   };
 });
