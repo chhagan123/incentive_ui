@@ -40,7 +40,7 @@
           class="bg-[#CF6768] hover:bg-red-400 w-40 h-10 rounded-sm flex items-center justify-center text-white text-md mt-3 cursor-pointer"
           @click="createBranch"
         >
-          <ActionWithIcon :icon="Plus" text="Create Branch" />
+          <ActionWithIcon :icon="Plus" text="Create Branch" :loading="setupStore.loading"/>
         </div>
       </div>
       <div class="gap-2 flex items-center">
@@ -87,7 +87,7 @@
   const setupStore = useSetupStore()
 
   const branchCode = ref('')
-  const jobTitle = ref('')
+  const jobTitle = ref([])
 
   const rowData = ref<any[]>([
   { code: 'test', position: 'exec', created_at: 'November 24, 2025' },
@@ -120,16 +120,44 @@ const formatDate = (date: Date) => {
 }
 
 
-const createBranch = () => {
-  if(!branchCode.value || !jobTitle.value) return
-  rowData.value.push({
-    code:branchCode.value,
-    position:jobTitle.value,
-    created_at: formatDate(new Date())
-  })
-   branchCode.value = ''
-  jobTitle.value = ''
-}
+const createBranch = async () => {
+  // validate required fields
+  if (!branchCode.value?.trim()) {
+    alert("Branch code is required");
+    return;
+  }
+
+  if (!jobTitle.value?.length) {
+    alert("Please select at least one position");
+    return;
+  }
+
+  // map selected names to IDs
+  const payload = {
+    code: branchCode.value.trim(),
+    positions: jobTitle.value
+      .map((selectedName) => {
+        const match = setupStore.positionsData.find(
+          (pos) => pos.name.trim() === selectedName.trim()
+        );
+        return match ? match.id : null;
+      })
+      .filter(Boolean), // remove any unmatched names
+  };
+
+  console.log("Payload:", payload);
+
+  // send API request
+  const res = await setupStore.addBranches(payload);
+
+  if (res.status === 201) {
+    alert("Branch Successfully created");
+  }
+
+  // reset form
+  branchCode.value = "";
+  jobTitle.value = [];
+};
 
 onMounted(() => {
   setupStore.fetchPositions()

@@ -4,7 +4,8 @@ import {
   getPositions,
   postPositions,
   deletePositions,
-  getBranches 
+  getBranches,
+  postBranches 
 
 } from "../utils/Apis/companySetup";
 
@@ -35,6 +36,21 @@ export const useSetupStore = defineStore("setup", () => {
       // updated_at: formatDate(branch.updated_at)
     }))
   }
+
+  // addBranches
+
+  const addBranches = async (payload: any) => {
+    loading.value = true
+    const res = await postBranches(payload);
+
+    if (res.status == 201) {
+      const newBranch = res?.data?.branch;
+      branchesData.value = [...branchesData.value, newBranch];
+      loading.value=false
+    }
+    return res;
+  };
+  
   
   // get positions
   const fetchPositions = async () => {
@@ -95,6 +111,7 @@ export const useSetupStore = defineStore("setup", () => {
     loading,
     removePositions,
     branchesData,
-    fetchBranches
+    fetchBranches,
+    addBranches
   };
 });
