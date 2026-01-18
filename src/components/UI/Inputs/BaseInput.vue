@@ -15,6 +15,7 @@
         v-if="type !== 'select'"
         :type="type"
         :placeholder="placeholder"
+        :disabled="disabled || undefined"
         :value="modelValue"
         @input="updateValue($event?.target?.value)"
         class="w-full h-[44px] rounded-lg border border-gray-200 px-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#CF6768]"
@@ -57,13 +58,17 @@
 
 <script setup lang="ts">
 import Down from "../../../assets/icons/Chevron/Down.vue";
-import { ref } from "vue";
+import { readonly, ref } from "vue";
 import Up from "../../../assets/icons/Chevron/Up.vue";
 const isOpen = ref(false);
 
 
 /* PROPS */
 const props = defineProps({
+  disabled: {
+    type: Boolean,
+    default: false
+  },
   modelValue: {
     type: String,
     default: "",
@@ -79,6 +84,7 @@ const props = defineProps({
     default: "text",
   },
   required: Boolean,
+
 });
 
 
