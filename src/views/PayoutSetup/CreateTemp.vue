@@ -57,6 +57,9 @@
     const branchCode = ref<any>([])
     const tempName  = ref<any>('')  
 
+
+  
+
   
    const createTemp = async () => {
     if (!tempName.value?.trim()) {
@@ -83,7 +86,7 @@
     const data = await setupStore.addPayoutTemp(payload)
     if(data.status == 200){
       alert('created succesfully')
-      route.push('/company-setup/payout-templates/details')
+      route.push(`/company-setup/payout-templates/details/${data.data.template.id}`)
 
     }else{
       alert('error')
