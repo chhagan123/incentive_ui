@@ -60,3 +60,11 @@ export const getPositions = async () => {
   export  const deletePayoutTemp = async(templateId:string) => {
     return await axios.delete(`/api/v2/setup/templates/${templateId}`)
   }
+
+  // single payoutTemplate data by id
+
+  export const getSingleTemp = async (templateId:string) => {
+    return await axios.get(`api/v2/setup/templates/${templateId}`)
+  }
+
+

@@ -9,8 +9,8 @@ import {
   deleteBranches,
   getPayoutTemp,
   postPayoutTemp,
-  deletePayoutTemp 
-
+  deletePayoutTemp,
+  getSingleTemp 
 } from "../utils/Apis/companySetup";
 
 export const useSetupStore = defineStore("setup", () => {
@@ -18,6 +18,7 @@ export const useSetupStore = defineStore("setup", () => {
   const branchesData = ref<any>([])
   const loading = ref<boolean>(false)
   const payoutTempData = ref<any>([])
+  const singleTempData = ref<any>([])
 
 
    //helper function formdate
@@ -156,6 +157,7 @@ export const useSetupStore = defineStore("setup", () => {
 
   const removePayoutTemp = async (templateId: any) => {
     try {
+      console.log('id',templateId)
       const res = await deletePayoutTemp(templateId);
   
       if (res.status === 200 || res.status === 204) {
@@ -169,6 +171,17 @@ export const useSetupStore = defineStore("setup", () => {
       console.error('Delete failed', error);
     }
   };
+
+  // get single payout Template data
+
+  const fetchSingleTemp = async(templateId:string) => {
+    const res = await getSingleTemp(templateId)
+    singleTempData.value = res?.data?.template
+    console.log('single',singleTempData.value)
+    return res
+  }
+
+
   
 
   return {
@@ -184,6 +197,8 @@ export const useSetupStore = defineStore("setup", () => {
     fetchPayoutTemp,
     payoutTempData,
     addPayoutTemp,
-    removePayoutTemp
+    removePayoutTemp,
+    fetchSingleTemp,
+    singleTempData
   };
 });

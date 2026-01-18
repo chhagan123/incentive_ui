@@ -112,10 +112,8 @@
     headerIcon: { component: EyeIcon },
     cellIcon: {
       component: EyeIcon,
-      onClick: () => {
-        router.push({
-          path: "/company-setup/payout-templates/details",
-        });
+      onClick: (row:any) => {
+        singleTempDetails(row.id)
       },
     },
   },
@@ -133,6 +131,17 @@
     throw error;
   }
 };
+
+const singleTempDetails = async(templateId:string) => {
+  const res = await setupStore.fetchSingleTemp(templateId)
+  console.log('res',res)
+  if(res.status){
+    router.push({
+          path: `/company-setup/payout-templates/details/${templateId}`,
+        });
+    
+  }
+}
 onMounted(() => {
   setupStore.fetchPayoutTemp()
 })
