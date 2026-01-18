@@ -80,7 +80,7 @@ const routes = [
               meta: { breadcrumb: "Create" },
             },
             {
-              path: "details",
+              path: `details/:id`,
               component: Details,
               meta: { breadcrumb: "Details" },
             },
