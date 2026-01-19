@@ -30,6 +30,7 @@
           label="Branches"
           placeholder="Select branches"
           type="select"
+          :disabled="true"
           required
         />
       </div>
@@ -54,7 +55,7 @@
       </div>
 
       <div class="border-3 border-black/10 rounded-xl">
-        <BaseTable :rowData="rowData" :columnDefs="columnDefs" />
+        <BaseTable :rowData="selectedStructure?.categories" :columnDefs="columnDefs" />
       </div>
 
       <div
@@ -83,7 +84,7 @@
       </div>
 
       <div class="border-3 border-black/10 rounded-xl">
-        <BaseTable :rowData="posData" :columnDefs="posCOl" />
+        <BaseTable :rowData="selectedPostions.positions" :columnDefs="posCOl" />
       </div>
 
       <div
@@ -114,7 +115,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watch } from "vue";
+import { ref, watch,computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useSetupStore } from "../../stores/setup";
 
@@ -131,34 +132,43 @@ const route = useRoute();
 const setupstore = useSetupStore();
 
 const tabs = ref<any[]>([]);
-const activeTab = ref<string>("");
+const activeTab = ref<any>(null);
 const branches = ref<string[]>([]);
-
-const rowData = ref([
-  {
-    name: "test",
-    incentive: "100",
-    target: "11",
-    calc: "fixed number",
-    type: "unit",
-    related_to: "Branch Target",
-  },
-]);
 
 const columnDefs = [
   { label: "Name", field: "name" },
-  { label: "Incentive", field: "incentive" },
-  { label: "Target", field: "target" },
-  { label: "Calc", field: "calc" },
+  { label: "Incentive", field: "incentive_qty" },
+  { label: "Target", field: "target_qty" },
+  { label: "Calc", field: "calc_qty" },
   { label: "Type", field: "type" },
-  { label: "Related to", field: "related_to" },
+  { label: "Related to", field: "relation_type" },
 ];
 
-const posData = ref([{ position: "exce", payout_split: "100%" }]);
 const posCOl = ref([
-  { label: "Position", field: "position" },
-  { label: "Payout Split %", field: "payout_split" },
+  { label: "Position", field: "name" },
+  { label: "Payout Split %",
+    field: "payout_split",
+    valueGetter: (raw) => {
+    return selectedStructure?.value?.position_splits?.[raw.id] ?? "-"
+  }
+   },
 ]);
+
+// dynnamic branches tab data render for payout template
+const selectedStructure = computed(() => {
+  return (
+    setupstore.singleTempData?.structures
+      ?.find(structure => structure.branch_id === activeTab.value?.id) || null
+  )
+})
+
+const selectedPostions = computed(() => {
+  return (
+    setupstore.singleTempData?.branches
+      ?.find(branch => branch.code === activeTab.value?.value) || null
+  )
+})
+
 
 /*FETCH TEMPLATE BY ROUTE ID */
 watch(
@@ -180,14 +190,16 @@ watch(
       data.branches?.map((b: any) => ({
         label: b.code,
         value: b.code,
+        id:b.id
       })) || [];
 
     if (tabs.value.length > 0) {
-      activeTab.value = tabs.value[0].value;
+      activeTab.value = tabs.value[0];
     }
 
     branches.value = data.branches?.map((b: any) => b.code) || [];
   },
   { immediate: true }
 );
+
 </script>
