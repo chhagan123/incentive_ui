@@ -79,7 +79,12 @@ export const useSetupStore = defineStore("setup", () => {
   // get positions
   const fetchPositions = async () => {
     const data = await getPositions();
-    positionsData.value = data.positions
+  
+    positionsData.value = data.positions.map((position:any )=> ({
+      ...position,
+      created_at: formatDate(position.created_at),
+      // updated_at: formatDate(branch.updated_at)
+    }))
   };
 
   const addPositions = async (payload: any) => {
