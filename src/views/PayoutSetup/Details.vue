@@ -1,4 +1,96 @@
 <template>
+  <Modal :visible="isModalOpen" @close="isModalOpen = false">
+    <template #default>
+      <h2 class="text-lg font-semibold mb-4">Create Category</h2>
+
+      <form @submit.prevent="" class="space-y-4">
+        <div class="flex flex-col gap-4">
+          <div>
+            <BaseInput
+              v-model="formValue.categoryName"
+              label="CATERGORY NAME"
+              type="text"
+              placeholder="Enter Category Name"
+              class="w-full"
+              required
+            />
+          </div>
+
+          <div>
+            <BaseInput
+              v-model.number="formValue.incentiveAmount"
+              label="INCENTIVE AMOUNT"
+              type="number"
+              placeholder="Enter Incentive"
+              class="w-full"
+              required
+            />
+          </div>
+          <div>
+            <CustomSelect
+              v-model="formValue.type"
+              label="Type"
+              type="select"
+              placeholder="select Type"
+              :multiple="false"
+              :options="['money', 'percentage']"
+              class="w-full"
+              required
+            />
+          </div>
+          <div>
+            <BaseInput
+              v-model.number="formValue.calc"
+              label="calc"
+              type="number"
+              placeholder="Enter Incentive"
+              class="w-full"
+              required
+            />
+          </div>
+          <div>
+            <CustomSelect
+              v-model="formValue.relationType"
+              label="Relation Type"
+              type="select"
+              placeholder="select Type"
+              :multiple="false"
+              :options="['retail', 'retail archeved', 'other category']"
+              class="w-full"
+              required
+            />
+          </div>
+        </div>
+
+        <div class="flex gap-2 mt-4">
+          <button
+            type="button"
+            class="px-4 py-2 border border-gray-200 rounded w-1/2"
+            @click="isModalOpen = false"
+          >
+            Cancel
+          </button>
+          <!-- <button
+          type="submit"
+          class="px-4 py-2 bg-red-400 text-white rounded w-1/2"
+        >
+          Create Category
+        </button> -->
+          <div
+            type="submit"
+            class="bg-[#CF6768] hover:bg-red-400 w-1/2 h-10 rounded-sm flex items-center justify-center text-white cursor-pointer"
+          >
+            <ActionWithIcon
+              :isrighticon="false"
+              :loading="setupstore.loading"
+              text="create Category"
+            />
+          </div>
+        </div>
+      </form>
+    </template>
+  </Modal>>
+
   <div class="flex flex-col gap-10">
     <div class="flex flex-col gap-6">
       <div class="flex flex-col gap-2">
@@ -65,6 +157,7 @@
         <div
           class="bg-red-300 hover:bg-red-400 w-9 h-9 rounded-xl
                  flex items-center justify-center"
+                  @click="isModalOpen = !isModalOpen"
         >
           <component :is="PlusIcon" />
         </div>
@@ -118,6 +211,7 @@
 import { ref, watch,computed } from "vue";
 import { useRoute, useRouter } from "vue-router";
 import { useSetupStore } from "../../stores/setup";
+import Modal from "../../components/UI/Modal/Modal.vue";
 
 import Tab from "../../components/UI/CompanyTab/Tab.vue";
 import BaseInput from "../../components/UI/Inputs/BaseInput.vue";
@@ -130,11 +224,17 @@ import RightArrow from "../../assets/icons/Arrow/RightArrow.vue";
 const router = useRouter();
 const route = useRoute();
 const setupstore = useSetupStore();
-
+const isModalOpen = ref(false);
 const tabs = ref<any[]>([]);
 const activeTab = ref<any>(null);
 const branches = ref<string[]>([]);
-
+const formValue = ref({
+  categoryName: "",
+  incentiveAmount: 0,
+  type: "",
+  calc: 0,
+  relationType: "",
+});
 const columnDefs = [
   { label: "Name", field: "name" },
   { label: "Incentive", field: "incentive_qty" },
