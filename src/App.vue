@@ -6,6 +6,7 @@
     
       <div class="max-w-7xl mx-auto px-4 py-8"> 
         <div class="flex flex-col gap-4">
+          <Badge />
           <BreadCrumb :items="breadcrumbItems"/>
           <RouterView />
         </div>      
@@ -22,6 +23,8 @@ import BreadCrumb from "./components/UI/BreadCrumbs/BreadCrumb.vue";
 import { useRoute } from "vue-router";
 import { computed } from "vue";
 import Footer from "./components/Footer.vue";
+import Badge from "./components/UI/RouteBadge/Badge.vue";
+
 
 const route = useRoute()
 
