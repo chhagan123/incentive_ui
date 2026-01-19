@@ -3,7 +3,7 @@
     <template #default>
       <h2 class="text-lg font-semibold mb-4">Create Category</h2>
 
-      <form @submit.prevent="" class="space-y-4">
+      <form @submit.prevent="createCategory" class="space-y-4">
         <div class="flex flex-col gap-4">
           <div>
             <BaseInput
@@ -235,6 +235,60 @@ const formValue = ref({
   calc: 0,
   relationType: "",
 });
+
+const createCategory = async () => {
+  if (!formValue.value.categoryName.trim() ) {
+    alert("Category Name is required");
+    return;
+  }
+  if (formValue.value.incentiveAmount <= 0) {
+    alert("Incentive Amount must be greater than zero");
+    return;
+  }
+  if (!formValue.value.type.trim()) {
+    alert("Type is required");
+    return;
+  }
+  if (formValue.value.calc <= 0) {
+    alert("Calc must be greater than zero");
+    return;
+  }
+
+  setupstore.loading = true;
+  const templateId = route.params.id as string;
+
+  const payload = {
+    branch_id: activeTab.value.id,
+    name: formValue.value.categoryName,
+    incentive_qty: formValue.value.incentiveAmount,
+    type: formValue.value.type,
+    calc_qty: formValue.value.calc,
+    relation_type: formValue.value.relationType,
+  };
+
+  try {
+    const res = await setupstore.addPayoutCategory(templateId, payload);
+    console.log("Create category response:", res);
+    isModalOpen.value = false;
+    if(res.status == 201){
+      await setupstore.fetchSingleTemp(templateId);
+      alert("Category created successfully!");
+    }else{
+      alert("Failed to create category.");
+    }
+
+    // reset form
+    formValue.value = {
+      categoryName: "",
+      incentiveAmount: 0,
+      type: "",
+      calc: 0,
+      relationType: "",
+    };
+  } catch (err) {
+    console.error("Create category failed:", err);
+  }
+};
 const columnDefs = [
   { label: "Name", field: "name" },
   { label: "Incentive", field: "incentive_qty" },

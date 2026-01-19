@@ -68,3 +68,12 @@ export const getPositions = async () => {
   }
 
 
+// post Create payout category for branch
+
+export const postPayoutCategory = async (templateId: string, payload: any) => {
+  const res = await axios.post(
+    `/api/v2/setup/templates/${templateId}/categories`,
+     payload
+  );
+  return res;
+};

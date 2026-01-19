@@ -10,7 +10,8 @@ import {
   getPayoutTemp,
   postPayoutTemp,
   deletePayoutTemp,
-  getSingleTemp 
+  getSingleTemp,
+  postPayoutCategory 
 } from "../utils/Apis/companySetup";
 
 export const useSetupStore = defineStore("setup", () => {
@@ -181,8 +182,19 @@ export const useSetupStore = defineStore("setup", () => {
     return res
   }
 
+ // post payout category for branch
+ const addPayoutCategory = async (payload:any,templateId:string) => {
+  try{
+    loading.value = true
+    const res =  await postPayoutCategory(payload,templateId)
+    return res
+  }catch(error){  
+    throw error
+  }finally{
+    loading.value = false
+  }
 
-  
+ }
 
   return {
     fetchPositions,
@@ -199,6 +211,7 @@ export const useSetupStore = defineStore("setup", () => {
     addPayoutTemp,
     removePayoutTemp,
     fetchSingleTemp,
-    singleTempData
+    singleTempData,
+    addPayoutCategory
   };
 });
