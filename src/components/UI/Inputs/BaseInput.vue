@@ -18,6 +18,7 @@
         :disabled="disabled || undefined"
         :value="modelValue"
         @input="updateValue($event?.target?.value)"
+        :class="disabled ? 'bg-black/2 cursor-not-allowed text-black/50 ' : ''"
         class="w-full h-[44px] rounded-lg border border-gray-200 px-4 text-sm text-gray-700 placeholder-gray-400 focus:outline-none focus:ring-1 focus:ring-[#CF6768]"
       />
 
