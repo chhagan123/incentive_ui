@@ -22,7 +22,7 @@
         @click="toggleDropdown"
       >
         <!-- Selected items -->
-        <template v-if="modelValue.length">
+        <template v-if="modelValue.length && multiple">
           <span
             v-for="option in modelValue"
             :key="option"
@@ -39,6 +39,12 @@
           </span>
         </template>
 
+        <!-- SINGLE SELECT -->
+        <template v-else-if="!multiple && modelValue">
+          <span class="text-sm text-gray-700">
+          {{ modelValue }}
+           </span>
+       </template>
         <!-- Placeholder -->
         <span v-else class="text-gray-400">
           {{ placeholder }}
@@ -79,7 +85,6 @@
           @click="toggleOption(option)"
         >
           {{ option }}
-          <span v-if="modelValue.includes(option)">✔</span>
         </li>
       </ul>
     </div>
@@ -91,12 +96,13 @@
   import Up from "../../../assets/icons/Chevron/Up.vue"
   
   const props = defineProps({
-    modelValue: { type: Array, default: () => [] },
+    modelValue: { type: [Array,String], default: () => [] },
     options: { type: Array, default: () => [] },
     placeholder: { type: String, default: "Select option" },
     label: { type: String, default: "" },
     required: { type: Boolean, default: false },
-    disabled: { type: Boolean, default: false }
+    disabled: { type: Boolean, default: false },
+    multiple: { type: Boolean, default: true },
   })
   
   const emit = defineEmits(["update:modelValue"])
@@ -110,6 +116,7 @@
   }
   
   const toggleOption = (option) => {
+  if (props.multiple) {
     if (props.modelValue.includes(option)) {
       emit(
         "update:modelValue",
@@ -121,9 +128,15 @@
         [...props.modelValue, option]
       )
     }
+  } else {
+    emit("update:modelValue", option) 
+    isOpen.value = false
   }
+}
+
   
   const removeOption = (option) => {
+    if(!props.multiple) return
     emit(
       "update:modelValue",
       props.modelValue.filter(item => item !== option)
