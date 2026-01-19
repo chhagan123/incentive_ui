@@ -24,7 +24,7 @@
           :key="tab.key || tab.value"
           class="relative pb-3 text-md font-bold cursor-pointer"
           :class="isLocalActive(tab) ? activeClass : inactiveClass"
-          @click="$emit('change', tab.value)"
+          @click="$emit('change', tab)"
         >
           {{ tab.label }}
   
@@ -61,7 +61,7 @@
   }
   
   const isLocalActive = (tab) => {
-    return props.activeTab === tab.value
+    return props.activeTab.value === tab.value
   }
   </script>
   
