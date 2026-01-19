@@ -89,7 +89,34 @@
         </div>
       </form>
     </template>
-  </Modal>>
+  </Modal>
+  <!-- delete category modal -->
+
+  <Modal v-if="IsDeleteModalOpen" :visible="IsDeleteModalOpen" @close="IsDeleteModalOpen = false">
+    <template #default>
+      <h2 class="text-lg font-semibold mb-4">Delete Category</h2>
+      <p>Are you sure you want to delete this category?</p>
+      <div class="flex gap-2 mt-4">
+        <button
+          type="button"
+          class="px-4 py-2 border border-gray-200 rounded w-1/2 cursor-pointer"
+          @click="IsDeleteModalOpen = false"
+        >
+          Cancel
+        </button>
+        <div
+          @click="deleteCategory"
+          class="bg-[#CF6768] hover:bg-red-400 w-1/2 h-10 rounded-sm flex items-center justify-center text-white cursor-pointer"
+        >
+          <ActionWithIcon
+            :isrighticon="false"
+            :loading="setupstore.loading"
+            text="Delete Category"
+          />
+        </div>
+      </div>
+    </template>
+  </Modal>
 
   <div class="flex flex-col gap-10">
     <div class="flex flex-col gap-6">
@@ -220,21 +247,24 @@ import BaseTable from "../../components/UI/Tables/BaseTable.vue";
 import ActionWithIcon from "../../components/UI/Buttons/ActionWithIcon.vue";
 import PlusIcon from "../../assets/icons/Plus/PlusIcon.vue";
 import RightArrow from "../../assets/icons/Arrow/RightArrow.vue";
+import DeleteIcon from "../../assets/icons/Delete/DeleteIcon.vue";
 
 const router = useRouter();
 const route = useRoute();
 const setupstore = useSetupStore();
 const isModalOpen = ref(false);
+const IsDeleteModalOpen = ref(false);
 const tabs = ref<any[]>([]);
 const activeTab = ref<any>(null);
 const branches = ref<string[]>([]);
 const formValue = ref({
   categoryName: "",
-  incentiveAmount: 0,
+  incentiveAmount: "",
   type: "",
-  calc: 0,
+  calc: "",
   relationType: "",
 });
+const categoryId = ref("");
 
 const createCategory = async () => {
   if (!formValue.value.categoryName.trim() ) {
@@ -280,15 +310,40 @@ const createCategory = async () => {
     // reset form
     formValue.value = {
       categoryName: "",
-      incentiveAmount: 0,
+      incentiveAmount: "",
       type: "",
-      calc: 0,
+      calc: "",
       relationType: "",
     };
   } catch (err) {
     console.error("Create category failed:", err);
   }
 };
+
+// delete category 
+  const deleteCategory = async() => {
+     setupstore.loading = true;
+    const templateId = route.params.id as string;
+    const payload = {
+      branch_id: activeTab.value.id,
+      category_id: categoryId.value,
+    };
+    try {
+      
+      const res = await setupstore.removePayoutCategory(templateId,payload)
+      console.log("Delete category response:", res);
+      if(res.status == 200){
+        IsDeleteModalOpen.value = false;
+        await setupstore.fetchSingleTemp(templateId);
+        alert("Category deleted successfully!");
+      }else{
+        alert("Failed to delete category.");
+      }
+    } catch (error) {
+      console.log('error',error)
+    }
+  }
+console.log('categoryId outside',categoryId.value)
 const columnDefs = [
   { label: "Name", field: "name" },
   { label: "Incentive", field: "incentive_qty" },
@@ -296,6 +351,17 @@ const columnDefs = [
   { label: "Calc", field: "calc_qty" },
   { label: "Type", field: "type" },
   { label: "Related to", field: "relation_type" },
+  { label:"Delete", field:"actions",
+  headerIcon: { component: DeleteIcon },
+    cellIcon: { 
+      component: DeleteIcon,
+      onClick:(row:any) => {
+            IsDeleteModalOpen.value = true;
+            categoryId.value = row.id;
+            console.log('categoryId',categoryId.value)
+      } 
+    }
+  }
 ];
 
 const posCOl = ref([

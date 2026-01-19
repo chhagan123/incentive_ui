@@ -11,7 +11,8 @@ import {
   postPayoutTemp,
   deletePayoutTemp,
   getSingleTemp,
-  postPayoutCategory 
+  postPayoutCategory,
+  deletePayoutCategory 
 } from "../utils/Apis/companySetup";
 
 export const useSetupStore = defineStore("setup", () => {
@@ -196,6 +197,20 @@ export const useSetupStore = defineStore("setup", () => {
 
  }
 
+ // delete payout category for branch
+  const removePayoutCategory = async(templateId:string,payload:any) => {
+    console.log('temp',templateId)
+    console.log('pay',payload)
+    try{
+      const res = await deletePayoutCategory(templateId,payload)
+      return res
+    }catch(error){
+      console.error('Delete failed', error);
+    }finally{
+      loading.value = false
+    }
+  }
+
   return {
     fetchPositions,
     addPositions,
@@ -212,6 +227,7 @@ export const useSetupStore = defineStore("setup", () => {
     removePayoutTemp,
     fetchSingleTemp,
     singleTempData,
-    addPayoutCategory
+    addPayoutCategory,
+    removePayoutCategory
   };
 });

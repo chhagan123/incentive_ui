@@ -77,3 +77,13 @@ export const postPayoutCategory = async (templateId: string, payload: any) => {
   );
   return res;
 };
+
+// delete payout category for branch
+
+export const deletePayoutCategory = async (templateId: string, payload:any) => {
+ const res =  await axios.delete(
+    `/api/v2/setup/templates/${templateId}/categories`,
+      { data: payload }
+  );
+  return res;
+};
