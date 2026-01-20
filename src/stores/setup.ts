@@ -21,6 +21,7 @@ export const useSetupStore = defineStore("setup", () => {
   const loading = ref<boolean>(false)
   const payoutTempData = ref<any>([])
   const singleTempData = ref<any>([])
+  const deleteloading = ref<boolean>(false)
 
 
    //helper function formdate
@@ -233,6 +234,7 @@ export const useSetupStore = defineStore("setup", () => {
     fetchSingleTemp,
     singleTempData,
     addPayoutCategory,
-    removePayoutCategory
+    removePayoutCategory,
+    deleteloading
   };
 });
