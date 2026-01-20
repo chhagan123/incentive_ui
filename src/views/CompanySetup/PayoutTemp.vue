@@ -1,4 +1,19 @@
 <template>
+     <ConfirmDeleteModal
+    :visible="deleteModal"
+    :onCancel="
+      () => {
+        deleteModal = false;
+      }
+    "
+    :onConfirm="
+      () => {
+        deletePayoutTemp(rowId);
+      }
+    "
+    :loading="setupStore.deleteloading"
+    />
+
     <div class="w-full h-full flex flex-col justify-start gap-8">
       <div class="flex flex-col gap-1">
         <div class="text-md font-bold text-[#000000BF]">PAYOUT TEMPLATES</div>
@@ -73,8 +88,11 @@
   import EyeIcon from "../../assets/icons/Eye/EyeIcon.vue";
   import { useRouter } from "vue-router";
   import { useSetupStore } from "../../stores/setup";
+  import  ConfirmDeleteModal from "../../components/UI/Modal/DeleteConfirmMod.vue";
   const router = useRouter()
   const setupStore = useSetupStore()
+  const deleteModal = ref<boolean>(false)
+  const rowId = ref<string|null>(null)  
 
 
   const columnDefs = [
@@ -102,7 +120,8 @@
     cellIcon: {
       component: DeleteIcon,
       onClick: (raw: any) => {
-        deletePayoutTemp(raw.id);
+        deleteModal.value = true;
+        rowId.value = raw.id;
       },
     },
   },
@@ -120,8 +139,10 @@
 ];
 
  const deletePayoutTemp = async (templateId: string) => {
+
   try {
-    if (confirm("are you sure to delete these template")) {
+    setupStore.deleteloading = true;
+    if (templateId) {
       const res = await setupStore.removePayoutTemp(templateId);
       if (res.status == 200) {
         alert("Payout template deleted succesfully");
@@ -129,6 +150,9 @@
     }
   } catch (error) {
     throw error;
+  }finally {
+    setupStore.deleteloading = false;
+    deleteModal.value = false;
   }
 };
 
