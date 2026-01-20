@@ -96,3 +96,13 @@ export const deletePayoutCategory = async (templateId: string, payload:any) => {
   );
   return res;
 };
+
+//update payout category for branch
+export const updatePayoutCategory = async (templateId: string, payload: any) => {
+  const res = await axios.put(
+    `/api/v2/setup/templates/${templateId}/categories`,
+     payload
+  );
+  return res;
+}
+

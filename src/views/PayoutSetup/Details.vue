@@ -55,7 +55,7 @@
               type="select"
               placeholder="select Type"
               :multiple="false"
-              :options="['retail', 'retail archeved', 'other category']"
+              :options="['retail', 'retail_achieved', 'other_category']"
               class="w-full"
               required
             />
@@ -174,7 +174,7 @@
       </div>
 
       <div class="border-3 border-black/10 rounded-xl">
-        <BaseTable :rowData="selectedStructure?.categories" :columnDefs="columnDefs" />
+        <BaseTable :rowData="selectedStructure?.categories" :columnDefs="columnDefs" @update-row="editBranchPayout" />
       </div>
 
       <div
@@ -345,10 +345,10 @@ const createCategory = async () => {
   }
 console.log('categoryId outside',categoryId.value)
 const columnDefs = [
-  { label: "Name", field: "name" },
-  { label: "Incentive", field: "incentive_qty" },
-  { label: "Target", field: "target_qty" },
-  { label: "Calc", field: "calc_qty" },
+  { label: "Name", field: "name",enableediting: true },
+  { label: "Incentive", field: "incentive_qty",enableediting: true },
+  { label: "Target", field: "target_qty",enableediting: true },
+  { label: "Calc", field: "calc_qty" ,enableediting: true},
   { label: "Type", field: "type" },
   { label: "Related to", field: "relation_type" },
   { label:"Delete", field:"actions",
@@ -373,6 +373,22 @@ const posCOl = ref([
   }
    },
 ]);
+
+const editBranchPayout = async(row:any) => {
+  console.log('row', row)
+ 
+const payload = {
+  branch_id: activeTab.value.id,
+  category_id: row.row.id,
+  [row.field]: row.value
+  };
+  const templateId = route.params.id as string;
+  const res = await setupstore.editPayoutCategory(templateId, payload);
+  if(res.status == 200){
+    setupstore.fetchSingleTemp(templateId);
+    alert("Category updated successfully!");
+  }
+}
 
 // dynnamic branches tab data render for payout template
 const selectedStructure = computed(() => {

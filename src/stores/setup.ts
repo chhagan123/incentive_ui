@@ -14,7 +14,8 @@ import {
   postPayoutCategory,
   deletePayoutCategory,
   updateBranches,
-  updatePositions 
+  updatePositions,
+  updatePayoutCategory
 } from "../utils/Apis/companySetup";
 
 export const useSetupStore = defineStore("setup", () => {
@@ -238,6 +239,15 @@ export const useSetupStore = defineStore("setup", () => {
       loading.value = false
     }
   }
+  // update payout category for branch
+  const editPayoutCategory = async(templateId:string,payload:any) => {  
+    try{
+      const res = await updatePayoutCategory(templateId,payload)
+      return res
+    }catch(error){
+      throw error
+    }
+  }
 
   return {
     fetchPositions,
@@ -259,6 +269,7 @@ export const useSetupStore = defineStore("setup", () => {
     removePayoutCategory,
     deleteloading,
     updateBranch,
-    updatePositionsData
+    updatePositionsData,
+    editPayoutCategory
   };
 });
