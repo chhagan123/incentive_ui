@@ -1,4 +1,19 @@
 <template>
+     
+ <ConfirmDeleteModal
+    :visible="deleteModal"
+    :onCancel="
+      () => {
+        deleteModal = false;
+      }
+    "
+    :onConfirm="
+      () => {
+        deletePosition(rowId);
+      }
+    "
+    :loading="setupStore.deleteloading"
+    />
     <div class="w-full h-full flex flex-col justify-start gap-8">
       <div class="flex flex-col gap-1">
         <div class="text-md font-bold text-[#000000BF]">POSITIONS</div>
@@ -74,9 +89,12 @@
   import ClockIcon from "../../assets/icons/Clock/ClockIcon.vue";
   import DeleteIcon from "../../assets/icons/Delete/DeleteIcon.vue";
   import { useSetupStore } from "../../stores/setup";
+  import ConfirmDeleteModal from "../../components/UI/Modal/DeleteConfirmMod.vue";
 
   const setupStore = useSetupStore()
   const positions = ref<string>('')
+  const deleteModal= ref<boolean>(false)   
+  const rowId= ref<string|null>(null)   
 
 //   const rowData = ref<any[]>([
 //   { code: 'test', position: 'exec', created_at: 'November 24, 2025' },
@@ -101,7 +119,8 @@ const columnDefs = [
     cellIcon: { 
       component: DeleteIcon,
       onClick:(rowData:any) =>{
-         deletePositions(rowData.id)
+        deleteModal.value = true
+        rowId.value = rowData.id
         }
      }
   },
@@ -124,17 +143,22 @@ const createPosition = async () => {
 
 //DeletePostions
 
-const deletePositions = async(positionId:any) => {
+const deletePosition = async(positionId:any) => {
+  setupStore.deleteloading = true
   try {
-    if(confirm('are you sure want to delte these positions')){
+    if(positionId) {
     await setupStore.removePositions(positionId)}
   } catch (error) {
     console.log('error',error)
+  }finally{
+    setupStore.deleteloading = false
+    deleteModal.value = false
   }
 
 }
 
 onMounted(() => {
   setupStore.fetchPositions()
+  setupStore.fetchBranches()
 })
   </script>
