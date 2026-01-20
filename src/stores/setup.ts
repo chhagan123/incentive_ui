@@ -12,7 +12,8 @@ import {
   deletePayoutTemp,
   getSingleTemp,
   postPayoutCategory,
-  deletePayoutCategory 
+  deletePayoutCategory,
+  updateBranches 
 } from "../utils/Apis/companySetup";
 
 export const useSetupStore = defineStore("setup", () => {
@@ -74,6 +75,17 @@ export const useSetupStore = defineStore("setup", () => {
       alert('Error deleting position')
     } finally {
      
+    }
+  }
+
+  //update Branches
+  const  updateBranch = async (branchId:any,payload:any) => {
+    const res = await updateBranches(branchId,payload)
+    if(res.status == 200){
+      alert('Branch updated successfully');
+      return res
+    }else{
+      alert('Error updating branch');
     }
   }
   
@@ -235,6 +247,7 @@ export const useSetupStore = defineStore("setup", () => {
     singleTempData,
     addPayoutCategory,
     removePayoutCategory,
-    deleteloading
+    deleteloading,
+    updateBranch
   };
 });

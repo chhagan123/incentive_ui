@@ -16,7 +16,10 @@ export const postBranches = async (payload:any) => {
 export const deleteBranches = async(positionId:any) => {
   return await axios.delete(`/api/v2/setup/branches/${positionId}`).then((response) => response.data)
 }
-
+// update Branches
+export const updateBranches = async (branchId:any,payload:any) => {
+  return await axios.put(`/api/v2/setup/branches/${branchId}`,payload)
+}
 // postion add/get/and delete
 export const getPositions = async () => {
     try {
@@ -83,7 +86,7 @@ export const postPayoutCategory = async (templateId: string, payload: any) => {
 export const deletePayoutCategory = async (templateId: string, payload:any) => {
  const res =  await axios.delete(
     `/api/v2/setup/templates/${templateId}/categories`,
-      { data: payload }
+    { data: payload }
   );
   return res;
 };

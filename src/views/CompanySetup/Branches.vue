@@ -81,7 +81,7 @@
         </div>
       </div>  
       <div class="border-3 border-black/10 h-70  rounded-xl">
-      <BaseTable :rowData="setupStore.branchesData" :columnDefs="columnDefs" />
+      <BaseTable :rowData="setupStore.branchesData" :columnDefs="columnDefs" @update-row="editBranchName" />
     </div>
     </div>
   </template>
@@ -101,6 +101,7 @@
   import { useSetupStore } from "../../stores/setup";
   import CustomSelect from "../../components/UI/Inputs/CustomSelect.vue";
   import  ConfirmDeleteModal from "../../components/UI/Modal/DeleteConfirmMod.vue";
+  import Postions from "./Postions.vue";
   const setupStore = useSetupStore()
 
   const branchCode = ref('')
@@ -114,7 +115,7 @@
 ])
 
 const columnDefs = [
-{ label: 'Code', field: 'code', headerIcon: { component: CodeIcon } },
+{ label: 'Code', field: 'code', headerIcon: { component: CodeIcon },enableediting: true },
 { label: 'Postion', 
  field: 'positions',
  valueGetter: (row:any) => {
@@ -198,6 +199,22 @@ const deleteBranch = async(rowDataId:any) => {
     deleteModal.value = false
   }
 
+}
+
+// edit row branch name
+const editBranchName =  async({ row, field, value }) => {
+
+  const payload: any = {
+    positions: row.positions.map((pos:any) => pos.id)
+  }
+  payload[field] = value 
+  // send API request to update
+  const res = await setupStore.updateBranch(row.id, payload)
+  // update UI after success
+  if(res.id == row.id){
+    row[field] = value
+    alert("Branch updatedd successfully")
+  }
 }
 
 onMounted(() => {
