@@ -46,6 +46,12 @@ export const getPositions = async () => {
     
   }
 
+  // Update Positions
+  export const updatePositions = async (positionId:any,payload:any) => {
+    console.log('Updating position with ID:', positionId, 'and payload:', payload)
+    return await axios.put(`/api/v2/setup/positions/${positionId}`,payload)
+  }
+
   // payout templates
 
   //getPayout templateData

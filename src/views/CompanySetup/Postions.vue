@@ -1,5 +1,4 @@
-<template>
-     
+<template>    
  <ConfirmDeleteModal
     :visible="deleteModal"
     :onCancel="
@@ -71,7 +70,7 @@
         </div>
       </div>  
       <div class="border-3 border-black/10 h-70  rounded-xl">
-      <BaseTable :rowData="setupStore.positionsData" :columnDefs="columnDefs" />
+      <BaseTable :rowData="setupStore.positionsData" :columnDefs="columnDefs" @update-row="editPosition"/>
     </div>
     </div>
   </template>
@@ -103,7 +102,7 @@
 console.log('setupstor',setupStore.positionsData.value)
 
 const columnDefs = [
-{ label: 'Name', field: 'name', headerIcon: { component: CodeIcon } },
+{ label: 'Name', field: 'name', headerIcon: { component: CodeIcon },enableediting:true }, 
 { label: 'Branches',
   field: 'branch_ids',
   valueGetter: (row:any) => {
@@ -155,6 +154,22 @@ const deletePosition = async(positionId:any) => {
     deleteModal.value = false
   }
 
+}
+
+const editPosition = async(row:any, field:string, value:string) => {
+  const positionId = row.row.id
+  const payload = {
+    [row.field]: row.value
+  }
+  try {
+   const res =  await setupStore.updatePositionsData(positionId, payload)
+   console.log('resss', res)
+   if(res?.status === 200){
+    setupStore.fetchPositions()
+   }  
+  } catch (error) {
+    console.error("Failed to update position:", error)
+  }
 }
 
 onMounted(() => {

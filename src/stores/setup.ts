@@ -13,7 +13,8 @@ import {
   getSingleTemp,
   postPayoutCategory,
   deletePayoutCategory,
-  updateBranches 
+  updateBranches,
+  updatePositions 
 } from "../utils/Apis/companySetup";
 
 export const useSetupStore = defineStore("setup", () => {
@@ -145,8 +146,17 @@ export const useSetupStore = defineStore("setup", () => {
       loading.value = false
     }
   }
-
-
+   // update Positions
+  const updatePositionsData = async (positionId:any,payload:any) => {
+    console.log('up',positionId,payload)
+    const res = await updatePositions(positionId,payload)
+    if(res.status == 200){
+      alert('Position updated successfully');
+      return res
+    }else{
+      alert('Error updating position');
+    }
+  }
   //Payout template
   
   // get payoutTemp
@@ -248,6 +258,7 @@ export const useSetupStore = defineStore("setup", () => {
     addPayoutCategory,
     removePayoutCategory,
     deleteloading,
-    updateBranch
+    updateBranch,
+    updatePositionsData
   };
 });
