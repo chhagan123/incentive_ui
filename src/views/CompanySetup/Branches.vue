@@ -1,4 +1,20 @@
 <template>
+  
+ <ConfirmDeleteModal
+    :visible="deleteModal"
+    :onCancel="
+      () => {
+        deleteModal = false;
+      }
+    "
+    :onConfirm="
+      () => {
+        deleteBranch(rowId);
+      }
+    "
+    :loading="setupStore.deleteloading"
+    />
+
     <div class="w-full h-full flex flex-col justify-start gap-8">
       <div class="flex flex-col gap-1">
         <div class="text-md font-bold text-[#000000BF]">BRANCHES</div>
@@ -84,10 +100,13 @@
   import DeleteIcon from "../../assets/icons/Delete/DeleteIcon.vue";
   import { useSetupStore } from "../../stores/setup";
   import CustomSelect from "../../components/UI/Inputs/CustomSelect.vue";
+  import  ConfirmDeleteModal from "../../components/UI/Modal/DeleteConfirmMod.vue";
   const setupStore = useSetupStore()
 
   const branchCode = ref('')
   const jobTitle = ref([])
+  const deleteModal = ref(false)
+  const rowId = ref(null)
 
   const rowData = ref<any[]>([
   { code: 'test', position: 'exec', created_at: 'November 24, 2025' },
@@ -110,7 +129,8 @@ const columnDefs = [
     cellIcon: { 
       component: DeleteIcon,
       onClick:(row:any) => {
-            deleteBranch(row.id)
+        deleteModal.value = true
+         rowId.value = row.id
       } 
     }
   },
@@ -137,6 +157,7 @@ const createBranch = async () => {
     return;
   }
 
+  
   // map selected names to IDs
   const payload = {
     code: branchCode.value.trim(),
@@ -167,12 +188,14 @@ const createBranch = async () => {
 //delete Branch
 
 const deleteBranch = async(rowDataId:any) => {
-
+    setupStore.deleteloading = true
   try {
-    if(confirm('are you sure want to delte these Branch')){
-    await setupStore.removeBranches(rowDataId)}
+    await setupStore.removeBranches(rowDataId)
   } catch (error) {
     console.log('error',error)
+  }finally{
+    setupStore.deleteloading = false
+    deleteModal.value = false
   }
 
 }
