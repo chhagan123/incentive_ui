@@ -140,7 +140,7 @@
   </template>
   
   <script setup lang="ts">
-  import { ref,onBeforeMount } from "vue";
+  import { ref,onBeforeMount, onMounted,onBeforeUnmount } from "vue";
   import Down from "../assets/icons/Chevron/Down.vue";
   import PersonIconBlack from "../assets/icons/Person/PersonIconBlack.vue";
   import JobIconWhite from "../assets/icons/Job/JobIconWhite.vue";
@@ -181,6 +181,7 @@
     if (activeDropdown.value === name) {
       activeDropdown.value = null;
     } else {
+      accountTab.value = false
       activeDropdown.value = name;
     }
   };
@@ -190,4 +191,21 @@
   token.value = val
 
  })
+ 
+ const handleClickOutside = (e) => {
+  if(accountTab.value==true && !e.target.closest('.relative')) {
+    accountTab.value = false
+  }if(activeDropdown.value!=null && !e.target.closest('.relative')){
+    activeDropdown.value = null
+  }
+ }
+
+ onMounted(() => {
+  document.addEventListener('click', handleClickOutside)
+ })
+
+ onBeforeUnmount(() => {
+    document.removeEventListener("click", handleClickOutside)
+  })
+
   </script>
