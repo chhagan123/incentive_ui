@@ -85,6 +85,7 @@ export const useSetupStore = defineStore("setup", () => {
     const res = await updateBranches(branchId,payload)
     if(res.status == 200){
       alert('Branch updated successfully');
+      fetchBranches()
       return res
     }else{
       alert('Error updating branch');
