@@ -179,6 +179,7 @@ const createBranch = async () => {
 
   if (res.status === 201) {
     alert("Branch Successfully created");
+    setupStore.fetchBranches(); // refresh branch list
   }
 
   // reset form
@@ -214,6 +215,7 @@ const editBranchName =  async({ row, field, value }) => {
   if(res.id == row.id){
     row[field] = value
     alert("Branch updatedd successfully")
+    setupStore.fetchBranches()
   }
 }
 
