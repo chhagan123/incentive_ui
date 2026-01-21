@@ -1,6 +1,6 @@
 <template>
     <footer class="w-full bg-slate-900 text-gray-300 px-10 py-4">
-      <div class="max-w-7xl md-auto lg:mx-25 flex flex-col sm:flex-row items-center justify-between ">
+      <div  class="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-2">
         
         <!-- Left -->
         <div class="flex items-center gap-2 text-sm">
